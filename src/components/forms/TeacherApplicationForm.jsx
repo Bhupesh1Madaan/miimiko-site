@@ -1,5 +1,14 @@
 import React, { useState } from 'react';
+import { ShieldCheck, Sparkles } from 'lucide-react';
 import Button from '../layout/Button';
+
+const FormField = ({ label, required, error, children }) => (
+    <div className="form-field">
+        <label className="form-label">{label}{required && <span>*</span>}</label>
+        {children}
+        {error && <span className="form-error-msg">{error}</span>}
+    </div>
+);
 
 const SPECIALIZATION_OPTIONS = [
     'Drawing',
@@ -80,7 +89,9 @@ const TeacherApplicationForm = () => {
     if (submitted) {
         return (
             <div className="form-success animate-scaleIn">
-                <div className="form-success-icon">🎉</div>
+                <div className="form-success-icon" style={{ display: 'flex', justifyContent: 'center', marginBottom: '1rem' }}>
+                    <Sparkles size={48} style={{ color: 'var(--gold)' }} />
+                </div>
                 <h4>Application Submitted Successfully!</h4>
                 <p>
                     Thank you for applying to teach at Miimiko Minds. Our academic board will review
@@ -94,20 +105,12 @@ const TeacherApplicationForm = () => {
         );
     }
 
-    const F = ({ name, label, required, children }) => (
-        <div className="form-field">
-            <label className="form-label">{label}{required && <span>*</span>}</label>
-            {children}
-            {errors[name] && <span className="form-error-msg">{errors[name]}</span>}
-        </div>
-    );
-
     return (
         <form onSubmit={handleSubmit} noValidate>
             <div className="contact-form-body">
 
                 <div className="form-row">
-                    <F name="fullName" label="Full Name" required>
+                    <FormField label="Full Name" required error={errors.fullName}>
                         <input
                             className={`form-input${errors.fullName ? ' error' : ''}`}
                             type="text"
@@ -116,8 +119,8 @@ const TeacherApplicationForm = () => {
                             onChange={set('fullName')}
                             autoComplete="name"
                         />
-                    </F>
-                    <F name="email" label="Email Address" required>
+                    </FormField>
+                    <FormField label="Email Address" required error={errors.email}>
                         <input
                             className={`form-input${errors.email ? ' error' : ''}`}
                             type="email"
@@ -126,11 +129,11 @@ const TeacherApplicationForm = () => {
                             onChange={set('email')}
                             autoComplete="email"
                         />
-                    </F>
+                    </FormField>
                 </div>
 
                 <div className="form-row">
-                    <F name="phone" label="Phone / WhatsApp" required>
+                    <FormField label="Phone / WhatsApp" required error={errors.phone}>
                         <input
                             className={`form-input${errors.phone ? ' error' : ''}`}
                             type="tel"
@@ -139,8 +142,8 @@ const TeacherApplicationForm = () => {
                             onChange={set('phone')}
                             autoComplete="tel"
                         />
-                    </F>
-                    <F name="country" label="Country of Residence" required>
+                    </FormField>
+                    <FormField label="Country of Residence" required error={errors.country}>
                         <input
                             className={`form-input${errors.country ? ' error' : ''}`}
                             type="text"
@@ -148,11 +151,11 @@ const TeacherApplicationForm = () => {
                             value={fields.country}
                             onChange={set('country')}
                         />
-                    </F>
+                    </FormField>
                 </div>
 
                 <div className="form-row">
-                    <F name="specialization" label="Primary Specialization" required>
+                    <FormField label="Primary Specialization" required error={errors.specialization}>
                         <div className="form-select-wrap">
                             <select
                                 className={`form-select${errors.specialization ? ' error' : ''}`}
@@ -163,8 +166,8 @@ const TeacherApplicationForm = () => {
                                 {SPECIALIZATION_OPTIONS.map(opt => <option key={opt} value={opt}>{opt}</option>)}
                             </select>
                         </div>
-                    </F>
-                    <F name="experience" label="Teaching Experience" required>
+                    </FormField>
+                    <FormField label="Teaching Experience" required error={errors.experience}>
                         <div className="form-select-wrap">
                             <select
                                 className={`form-select${errors.experience ? ' error' : ''}`}
@@ -175,10 +178,10 @@ const TeacherApplicationForm = () => {
                                 {EXPERIENCE_OPTIONS.map(opt => <option key={opt} value={opt}>{opt}</option>)}
                             </select>
                         </div>
-                    </F>
+                    </FormField>
                 </div>
 
-                <F name="portfolio" label="Portfolio or Resume Link (Google Drive, Behance, Website, etc.)" required>
+                <FormField label="Portfolio or Resume Link (Google Drive, Behance, Website, etc.)" required error={errors.portfolio}>
                     <input
                         className={`form-input${errors.portfolio ? ' error' : ''}`}
                         type="url"
@@ -186,9 +189,9 @@ const TeacherApplicationForm = () => {
                         value={fields.portfolio}
                         onChange={set('portfolio')}
                     />
-                </F>
+                </FormField>
 
-                <F name="aboutMe" label="Tell us about your art background & teaching philosophy" required>
+                <FormField label="Tell us about your art background & teaching philosophy" required error={errors.aboutMe}>
                     <textarea
                         className={`form-textarea${errors.aboutMe ? ' error' : ''}`}
                         placeholder="Write a brief intro about your art journey, why you love teaching kids, and your approach to fostering creativity..."
@@ -196,7 +199,7 @@ const TeacherApplicationForm = () => {
                         onChange={set('aboutMe')}
                         rows={4}
                     />
-                </F>
+                </FormField>
 
                 <div className="form-field checkbox-field" style={{ margin: '1rem 0 1.5rem' }}>
                     <label style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', cursor: 'pointer', fontSize: '0.92rem', color: 'var(--text-secondary)' }}>
@@ -222,8 +225,8 @@ const TeacherApplicationForm = () => {
                     {loading ? '✦ Submitting Application…' : 'Submit Application'}
                 </Button>
 
-                <p style={{ fontSize: '0.78rem', color: 'var(--text-muted)', textAlign: 'center', marginTop: '-0.5rem' }}>
-                    🔒 We protect your data and contact details. They are only used for this recruitment process.
+                <p style={{ fontSize: '0.78rem', color: 'var(--text-muted)', textAlign: 'center', marginTop: '-0.5rem', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.25rem' }}>
+                    <ShieldCheck size={14} style={{ color: 'var(--maroon)' }} /> We protect your data and contact details. They are only used for this recruitment process.
                 </p>
             </div>
         </form>

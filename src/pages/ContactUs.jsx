@@ -1,5 +1,15 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link, useLocation } from 'react-router-dom';
+import { 
+    Mail, 
+    MapPin, 
+    MessageSquare, 
+    Phone, 
+    Instagram, 
+    Clock, 
+    Sparkles, 
+    HelpCircle 
+} from 'lucide-react';
 import ContactForm from '../components/forms/ContactForm';
 import Button from '../components/layout/Button';
 
@@ -60,51 +70,73 @@ const FaqItem = ({ faq }) => {
     );
 };
 
-const ContactUs = () => (
-    <main>
+const ContactUs = () => {
+    const location = useLocation();
 
-        {/* ── Page Hero ── */}
-        <section className="page-hero">
-            <div className="page-hero-bg-pattern" />
-            <div className="container">
-                <div className="page-hero-content animate-fadeInUp">
-                    <nav className="page-hero-breadcrumb">
-                        <Link to="/">Home</Link><span className="sep">›</span>
-                        <span className="current">Contact Us</span>
-                    </nav>
-                    <div className="page-hero-eyebrow">📬 Get In Touch</div>
-                    <h1 className="page-hero-title">
-                        Let's Start Your Child's<br /><span>Creative Journey</span> Together
-                    </h1>
-                    <p className="page-hero-desc">
-                        Book a free demo, ask a question, or just say hello. Our team responds within 24 hours — usually much sooner.
-                    </p>
-                </div>
-            </div>
-        </section>
+    useEffect(() => {
+        const searchParams = new URLSearchParams(location.search);
+        if (location.hash === '#contact-form' || searchParams.get('scroll') === 'form') {
+            const timer = setTimeout(() => {
+                const element = document.getElementById('contact-form-container');
+                if (element) {
+                    element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            }, 100);
+            return () => clearTimeout(timer);
+        }
+    }, [location]);
 
-        {/* ── Contact Form + Info ── */}
-        <section className="contact-section">
-            <div className="container">
-                <div className="contact-grid">
+    return (
+        <main>
 
-                    {/* ── Left: Form ── */}
-                    <div className="contact-form-card animate-slideInLeft">
-                        <div className="contact-form-header">
-                            <h3>Send Us a Message</h3>
-                            <p>Fill in the details below and we'll be in touch very soon.</p>
+            {/* ── Page Hero ── */}
+            <section className="page-hero">
+                <div className="page-hero-bg-pattern" />
+                <div className="container">
+                    <div className="page-hero-content animate-fadeInUp">
+                        <nav className="page-hero-breadcrumb">
+                            <Link to="/">Home</Link><span className="sep">›</span>
+                            <span className="current">Contact Us</span>
+                        </nav>
+                        <div className="page-hero-eyebrow" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.35rem' }}>
+                            <Mail size={14} /> Get In Touch
                         </div>
-                        <ContactForm />
+                        <h1 className="page-hero-title">
+                            Let's Start Your Child's<br /><span>Creative Journey</span> Together
+                        </h1>
+                        <p className="page-hero-desc">
+                            Book a free demo, ask a question, or just say hello. Our team responds within 24 hours — usually much sooner.
+                        </p>
                     </div>
+                </div>
+            </section>
+
+            {/* ── Contact Form + Info ── */}
+            <section className="contact-section">
+                <div className="container">
+                    <div className="contact-grid">
+
+                        {/* ── Left: Form ── */}
+                        <div id="contact-form-container" className="contact-form-card animate-slideInLeft">
+                            <div className="contact-form-header">
+                                <h3>Send Us a Message</h3>
+                                <p>Fill in the details below and we'll be in touch very soon.</p>
+                            </div>
+                            <ContactForm />
+                        </div>
 
                     {/* ── Right: Info sidebar ── */}
                     <aside className="contact-info animate-slideInRight">
 
                         {/* Quick contact */}
                         <div className="contact-info-card">
-                            <h4>📍 Quick Contact</h4>
+                            <h4 style={{ display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
+                                <MapPin size={18} style={{ color: 'var(--maroon)' }} /> Quick Contact
+                            </h4>
                             <div className="contact-detail">
-                                <div className="contact-detail-icon">📧</div>
+                                <div className="contact-detail-icon" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                    <Mail size={16} style={{ color: 'var(--gold)' }} />
+                                </div>
                                 <div className="contact-detail-body">
                                     <strong>Email Us</strong>
                                     <a href="mailto:support@miimiko.com">support@miimiko.com</a>
@@ -114,7 +146,9 @@ const ContactUs = () => (
                                 </div>
                             </div>
                             <div className="contact-detail">
-                                <div className="contact-detail-icon">💬</div>
+                                <div className="contact-detail-icon" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                    <MessageSquare size={16} style={{ color: 'var(--gold)' }} />
+                                </div>
                                 <div className="contact-detail-body">
                                     <strong>WhatsApp</strong>
                                     <a href="https://wa.me/918799757218">+91 87997 57218</a>
@@ -124,14 +158,18 @@ const ContactUs = () => (
                                 </div>
                             </div>
                             <div className="contact-detail">
-                                <div className="contact-detail-icon">📞</div>
+                                <div className="contact-detail-icon" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                    <Phone size={16} style={{ color: 'var(--gold)' }} />
+                                </div>
                                 <div className="contact-detail-body">
                                     <strong>Call Us</strong>
                                     <a href="tel:+918799757218">+91 87997 57218</a>
                                 </div>
                             </div>
                             <div className="contact-detail">
-                                <div className="contact-detail-icon">📸</div>
+                                <div className="contact-detail-icon" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                    <Instagram size={16} style={{ color: 'var(--gold)' }} />
+                                </div>
                                 <div className="contact-detail-body">
                                     <strong>Instagram</strong>
                                     <a href="https://instagram.com/miimikoart" target="_blank" rel="noopener noreferrer">
@@ -143,7 +181,9 @@ const ContactUs = () => (
 
                         {/* Office hours */}
                         <div className="contact-info-card">
-                            <h4>🕐 Support Hours</h4>
+                            <h4 style={{ display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
+                                <Clock size={18} style={{ color: 'var(--maroon)' }} /> Support Hours
+                            </h4>
                             {[
                                 { day: 'Monday – Friday', hrs: '9:00 AM – 7:00 PM IST' },
                                 { day: 'Saturday', hrs: '10:00 AM – 4:00 PM IST' },
@@ -155,13 +195,15 @@ const ContactUs = () => (
                                 </div>
                             ))}
                             <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginTop: '1rem', lineHeight: 1.55 }}>
-                                ⏱ We aim to respond to all queries within 24 hours during working days.
+                                <Clock size={12} style={{ display: 'inline-block', marginRight: '4px', verticalAlign: 'middle' }} /> We aim to respond to all queries within 24 hours during working days.
                             </p>
                         </div>
 
                         {/* Quick CTA */}
                         <div className="contact-info-card" style={{ background: 'var(--grad-maroon)', border: '2px solid rgba(255,200,87,0.2)' }}>
-                            <h4 style={{ color: 'var(--gold)', borderColor: 'rgba(255,255,255,0.1)' }}>🎁 Skip the Queue</h4>
+                            <h4 style={{ color: 'var(--gold)', borderColor: 'rgba(255,255,255,0.1)', display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
+                                <Sparkles size={18} style={{ color: 'var(--gold)' }} /> Skip the Queue
+                            </h4>
                             <p style={{ fontSize: '0.93rem', color: 'rgba(255,255,255,0.75)', lineHeight: 1.7, marginBottom: '1.25rem' }}>
                                 Want to talk to someone right now? Click below to open a WhatsApp chat directly with our team.
                             </p>
@@ -184,7 +226,9 @@ const ContactUs = () => (
         <section className="faq-section">
             <div className="container">
                 <div className="text-center animate-fadeInUp">
-                    <span className="section-label">❓ FAQ</span>
+                    <span className="section-label" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.35rem' }}>
+                        <HelpCircle size={14} /> FAQ
+                    </span>
                     <h2 className="section-title" style={{ fontSize: '3rem', marginBottom: '0.5rem' }}>
                         Frequently Asked <span style={{ color: 'var(--maroon)' }}>Questions</span>
                     </h2>
@@ -201,12 +245,13 @@ const ContactUs = () => (
                     <p style={{ color: 'var(--text-muted)', marginBottom: '1.25rem' }}>
                         Still have questions? We'd love to hear from you.
                     </p>
-                    <Button variant="primary" to="/contact" arrow>Send Us a Message</Button>
+                    <Button variant="primary" to="/contact?scroll=form" arrow>Send Us a Message</Button>
                 </div>
             </div>
         </section>
 
     </main>
-);
+    );
+};
 
 export default ContactUs;

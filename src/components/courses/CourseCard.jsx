@@ -1,5 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Clock, BookOpen } from 'lucide-react';
 import Button from '../layout/Button';
 
 /**
@@ -15,7 +16,7 @@ import Button from '../layout/Button';
  *    totalClasses: number
  *    category    : string   – e.g. 'Beginner Friendly'
  *    categoryColor: string  – hex accent for the category pill
- *    icon        : string   – emoji
+ *    icon        : ReactNode
  *  }
  */
 const CourseCard = ({ course }) => {
@@ -30,11 +31,11 @@ const CourseCard = ({ course }) => {
         totalClasses,
         category,
         categoryColor = '#7a004b',
-        icon = '🎨',
+        icon = null,
     } = course;
 
     const toDetails = () => navigate(`/courses/${id}`);
-    const toContact = () => navigate('/contact');
+    const toContact = () => navigate(`/contact?course=${id}&scroll=form`);
 
     return (
         <div className="course-card">
@@ -74,11 +75,11 @@ const CourseCard = ({ course }) => {
                     <div
                         className="course-card-image"
                         style={{
-                            background: 'linear-gradient(135deg, #7a004b 0%, #4a0028 100%)',
+                            background: 'linear-gradient(135deg, var(--maroon) 0%, var(--maroon-dark) 100%)',
                             display: 'flex',
                             alignItems: 'center',
                             justifyContent: 'center',
-                            fontSize: '5.5rem',
+                            color: 'var(--gold)',
                         }}
                     >
                         {icon}
@@ -97,12 +98,16 @@ const CourseCard = ({ course }) => {
 
                 {/* Duration / Classes meta row */}
                 <div className="course-card-meta">
-                    <div className="course-card-meta-item">
-                        <span className="course-card-meta-value">⏱ {duration}</span>
+                    <div className="course-card-meta-item" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                        <span className="course-card-meta-value" style={{ display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
+                            <Clock size={16} style={{ color: 'var(--maroon)' }} /> {duration}
+                        </span>
                         <span className="course-card-meta-label">Duration</span>
                     </div>
-                    <div className="course-card-meta-item">
-                        <span className="course-card-meta-value">📚 {totalClasses}</span>
+                    <div className="course-card-meta-item" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                        <span className="course-card-meta-value" style={{ display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
+                            <BookOpen size={16} style={{ color: 'var(--maroon)' }} /> {totalClasses}
+                        </span>
                         <span className="course-card-meta-label">Total Classes</span>
                     </div>
                 </div>

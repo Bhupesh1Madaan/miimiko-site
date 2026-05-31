@@ -1,15 +1,23 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { Pencil, Palette, PenTool, Languages, Sparkles, BarChart2, BookOpen, HelpCircle, Gift } from 'lucide-react';
 import CourseCard from '../components/courses/CourseCard';
 import Button from '../components/layout/Button';
+
+// Student Artworks
+import art1 from '../assets/artwork/art1.jpeg';
+import art2 from '../assets/artwork/art2.jpeg';
+import art3 from '../assets/artwork/art3.jpeg';
+import art4 from '../assets/artwork/art4.jpeg';
+import art5 from '../assets/artwork/art5.jpeg';
 
 const ALL_COURSES = [
     {
         id: 'drawing',
         name: 'Drawing',
-        icon: '✏️',
+        icon: <Pencil size={64} />,
         brief: 'Build the foundation of all visual arts. Master lines, proportion, shading, and composition from the ground up.',
-        image: null,   // replace with: new URL('../assets/drawing.jpg', import.meta.url).href
+        image: null,
         duration: '3 Months',
         totalClasses: 24,
         category: 'Foundation',
@@ -18,7 +26,7 @@ const ALL_COURSES = [
     {
         id: 'painting',
         name: 'Painting',
-        icon: '🎨',
+        icon: <Palette size={64} />,
         brief: 'Explore watercolours and acrylics while discovering your unique colour voice and expressive painting style.',
         image: null,
         duration: '3 Months',
@@ -29,7 +37,7 @@ const ALL_COURSES = [
     {
         id: 'calligraphy',
         name: 'Calligraphy',
-        icon: '🖋️',
+        icon: <PenTool size={64} />,
         brief: 'The meditative craft of beautiful writing — from foundational letterforms to flowing decorative scripts.',
         image: null,
         duration: '2 Months',
@@ -37,42 +45,29 @@ const ALL_COURSES = [
         category: 'All Levels',
         categoryColor: '#9b59b6',
     },
+    {
+        id: 'phonics',
+        name: 'Phonics',
+        icon: <Languages size={64} />,
+        brief: 'Develop strong reading, pronunciation, and spelling skills through interactive phonics classes.',
+        image: null,
+        duration: '3 Months',
+        totalClasses: 24,
+        category: 'Language',
+        categoryColor: '#2ecc71',
+    },
 ];
 
 const COMPARE_ROWS = [
-    { feature: 'Duration', drawing: '3 Months', painting: '3 Months', calligraphy: '2 Months' },
-    { feature: 'Total Classes', drawing: '24 Classes', painting: '24 Classes', calligraphy: '16 Classes' },
-    { feature: 'Session Length', drawing: '45 min', painting: '45 min', calligraphy: '40 min' },
-    { feature: 'Age Group', drawing: '5–14 yrs', painting: '5–14 yrs', calligraphy: '7–14 yrs' },
-    { feature: 'Class Size', drawing: 'Max 6', painting: 'Max 6', calligraphy: 'Max 6' },
-    { feature: 'Certificate', drawing: '✓', painting: '✓', calligraphy: '✓' },
-    { feature: 'Beginner Friendly', drawing: '✓', painting: '✓', calligraphy: '✓' },
-    { feature: 'Materials Cost', drawing: 'Very Low', painting: 'Low–Medium', calligraphy: 'Low' },
-    { feature: 'Free Demo Available', drawing: '✓', painting: '✓', calligraphy: '✓' },
-];
-
-const AGE_GUIDE = [
-    {
-        emoji: '👶',
-        range: '5–7 Years',
-        group: 'Little Explorers',
-        courses: ['Drawing (Foundations)', 'Painting (Watercolour)'],
-        focus: 'Fine motor development, colour recognition, free expression with minimal structure. Playfulness is the priority.',
-    },
-    {
-        emoji: '🧒',
-        range: '8–11 Years',
-        group: 'Young Artists',
-        courses: ['Drawing (Intermediate)', 'Painting (Mixed Media)', 'Calligraphy (Beginner)'],
-        focus: 'Structured learning of technique alongside imaginative projects. Building a real skill set with growing independence.',
-    },
-    {
-        emoji: '👦',
-        range: '12–14 Years',
-        group: 'Creative Thinkers',
-        courses: ['Drawing (Advanced)', 'Painting (Advanced)', 'Calligraphy (Intermediate)'],
-        focus: 'Portfolio-quality work, self-directed projects, and critical thinking about art. Preparation for advanced studies.',
-    },
+    { feature: 'Duration', drawing: '3 Months', painting: '3 Months', calligraphy: '2 Months', phonics: '3 Months' },
+    { feature: 'Total Classes', drawing: '24 Classes', painting: '24 Classes', calligraphy: '16 Classes', phonics: '24 Classes' },
+    { feature: 'Session Length', drawing: '45 min', painting: '45 min', calligraphy: '40 min', phonics: '40 min' },
+    { feature: 'Age Group', drawing: '5–14 yrs', painting: '5–14 yrs', calligraphy: '7–14 yrs', phonics: '5–9 yrs' },
+    { feature: 'Class Size', drawing: 'Max 6', painting: 'Max 6', calligraphy: 'Max 6', phonics: 'Max 6' },
+    { feature: 'Certificate', drawing: '✓', painting: '✓', calligraphy: '✓', phonics: '✓' },
+    { feature: 'Beginner Friendly', drawing: '✓', painting: '✓', calligraphy: '✓', phonics: '✓' },
+    { feature: 'Materials Cost', drawing: 'Very Low', painting: 'Low–Medium', calligraphy: 'Low', phonics: 'Very Low' },
+    { feature: 'Free Demo Available', drawing: '✓', painting: '✓', calligraphy: '✓', phonics: '✓' },
 ];
 
 const FAQS = [
@@ -109,9 +104,11 @@ const Courses = () => (
                         <Link to="/">Home</Link><span className="sep">›</span>
                         <span className="current">Courses</span>
                     </nav>
-                    <div className="page-hero-eyebrow">🎨 Our Courses</div>
+                    <div className="page-hero-eyebrow" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.35rem' }}>
+                        <Palette size={16} /> Our Courses
+                    </div>
                     <h1 className="page-hero-title">
-                        Three Courses.<br /><span>Infinite Creative Possibilities.</span>
+                        Signature Courses.<br /><span>Infinite Creative Possibilities.</span>
                     </h1>
                     <p className="page-hero-desc">
                         Every course is crafted by expert artists and child educators to develop real skill,
@@ -125,7 +122,9 @@ const Courses = () => (
         <section style={{ padding: '7rem 0', background: 'var(--cream)' }}>
             <div className="container">
                 <div className="text-center animate-fadeInUp">
-                    <span className="section-label">📚 All Courses</span>
+                    <span className="section-label" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.35rem' }}>
+                        <BookOpen size={14} /> All Courses
+                    </span>
                     <h2 className="section-title" style={{ fontSize: '3rem', marginBottom: '0.5rem' }}>
                         Choose Your Child's <span style={{ color: 'var(--maroon)' }}>Creative Path</span>
                     </h2>
@@ -139,7 +138,7 @@ const Courses = () => (
                     ))}
                 </div>
                 <div className="text-center mt-lg">
-                    <Button variant="gold" to="/contact" arrow size="lg">Book Free Demo for Any Course</Button>
+                    <Button variant="gold" to="/contact?scroll=form" arrow size="lg">Book Free Demo for Any Course</Button>
                 </div>
             </div>
         </section>
@@ -148,7 +147,9 @@ const Courses = () => (
         <section className="compare-section">
             <div className="container">
                 <div className="text-center animate-fadeInUp">
-                    <span className="section-label">📊 Compare</span>
+                    <span className="section-label" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.35rem' }}>
+                        <BarChart2 size={14} /> Compare
+                    </span>
                     <h2 className="section-title" style={{ fontSize: '3rem', marginBottom: '0.5rem' }}>
                         Course <span style={{ color: 'var(--maroon)' }}>Comparison</span>
                     </h2>
@@ -161,9 +162,10 @@ const Courses = () => (
                         <thead>
                             <tr>
                                 <th style={{ minWidth: 180 }}>Feature</th>
-                                <th>✏️ Drawing</th>
-                                <th>🎨 Painting</th>
-                                <th>🖋️ Calligraphy</th>
+                                <th>Drawing</th>
+                                <th>Painting</th>
+                                <th>Calligraphy</th>
+                                <th>Phonics</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -191,6 +193,13 @@ const Courses = () => (
                                                 ? <span className="compare-cross">✗</span>
                                                 : row.calligraphy}
                                     </td>
+                                    <td>
+                                        {row.phonics === '✓'
+                                            ? <span className="compare-check">✓</span>
+                                            : row.phonics === '✗'
+                                                ? <span className="compare-cross">✗</span>
+                                                : row.phonics}
+                                    </td>
                                 </tr>
                             ))}
                         </tbody>
@@ -199,36 +208,28 @@ const Courses = () => (
             </div>
         </section>
 
-        {/* ── Age Guide ── */}
-        <section className="age-guide-section">
+        {/* ── Student Artwork Showcase ── */}
+        <section className="student-artwork-section" style={{ padding: '7rem 0', background: 'transparent' }}>
             <div className="container">
                 <div className="text-center animate-fadeInUp">
-                    <span className="section-label">👶 Age Guide</span>
-                    <h2 className="section-title" style={{ fontSize: '3rem', marginBottom: '0.5rem' }}>
-                        The Right Course for <span style={{ color: 'var(--maroon)' }}>Every Age</span>
-                    </h2>
-                    <p className="section-sub" style={{ margin: '0 auto' }}>
-                        Every curriculum is designed and adapted for the developmental stage of your child
+                    <span className="section-label" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.35rem' }}>
+                        <Sparkles size={14} /> Artwork Gallery
+                    </span>
+                    <h3 className="section-title" style={{ fontSize: '3rem', marginBottom: '0.5rem' }}>
+                        Created by Our <span style={{ color: 'var(--maroon)' }}>Students</span>
+                    </h3>
+                    <p className="section-sub" style={{ margin: '0 auto 3.5rem' }}>
+                        A glimpse into the stunning work created by our young minds in their live classes!
                     </p>
                 </div>
-                <div className="age-guide-grid">
-                    {AGE_GUIDE.map((group, i) => (
-                        <div key={i} className={`age-guide-card animate-fadeInUp delay-${i * 100 + 100}`}>
-                            <div className="age-guide-card-header">
-                                <span className="age-guide-emoji">{group.emoji}</span>
-                                <span className="age-guide-range">{group.range}</span>
-                                <span className="age-guide-group">{group.group}</span>
-                            </div>
-                            <div className="age-guide-card-body">
-                                <div className="age-guide-courses">
-                                    {group.courses.map((c, j) => (
-                                        <div key={j} className="age-guide-course">
-                                            <div className="age-guide-course-dot" />
-                                            {c}
-                                        </div>
-                                    ))}
+                <div className="artwork-gallery">
+                    {[art1, art2, art3, art4, art5].map((imgUrl, i) => (
+                        <div key={i} className="artwork-item animate-scaleIn">
+                            <div className="artwork-card">
+                                <img src={imgUrl} alt={`Student Masterpiece ${i + 1}`} />
+                                <div className="artwork-overlay">
+                                    <span>Masterpiece #{i + 1}</span>
                                 </div>
-                                <p className="age-guide-focus">{group.focus}</p>
                             </div>
                         </div>
                     ))}
@@ -240,7 +241,9 @@ const Courses = () => (
         <section style={{ padding: '7rem 0', background: 'transparent' }}>
             <div className="container">
                 <div className="text-center animate-fadeInUp">
-                    <span className="section-label">❓ Quick Answers</span>
+                    <span className="section-label" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.35rem' }}>
+                        <HelpCircle size={14} /> Quick Answers
+                    </span>
                     <h2 className="section-title" style={{ fontSize: '3rem', marginBottom: '0.5rem' }}>
                         Course <span style={{ color: 'var(--maroon)' }}>FAQs</span>
                     </h2>
@@ -256,8 +259,8 @@ const Courses = () => (
             <div className="creative-blob" style={{ width: 350, height: 350, background: 'rgba(255,200,87,0.07)', top: -80, right: -80 }} />
             <div className="creative-blob" style={{ width: 200, height: 200, background: 'rgba(255,182,193,0.06)', bottom: -60, left: -40, animationDelay: '8s' }} />
             <div className="container animate-fadeInUp">
-                <span className="section-label" style={{ background: 'rgba(255,200,87,0.12)', borderColor: 'rgba(255,200,87,0.3)', color: 'var(--gold)' }}>
-                    🎁 No Commitment
+                <span className="section-label" style={{ background: 'rgba(255,200,87,0.12)', borderColor: 'rgba(255,200,87,0.3)', color: 'var(--gold)', display: 'inline-flex', alignItems: 'center', gap: '0.35rem' }}>
+                    <Gift size={14} /> No Commitment
                 </span>
                 <h2 className="section-title on-dark" style={{ fontSize: '3rem', margin: '1rem 0 0.75rem' }}>
                     Still Deciding? <span style={{ color: 'var(--gold)' }}>Try It Free First.</span>
@@ -266,8 +269,8 @@ const Courses = () => (
                     Book a free 1-on-1 demo class — our teacher will match your child to the perfect course live.
                 </p>
                 <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
-                    <Button variant="gold" to="/contact" arrow size="lg">Book Free Demo</Button>
-                    <Button variant="outline-gold" to="/contact" size="lg">Ask a Question</Button>
+                    <Button variant="gold" to="/contact?scroll=form" arrow size="lg">Book Free Demo</Button>
+                    <Button variant="outline-gold" to="/contact?scroll=form" size="lg">Ask a Question</Button>
                 </div>
             </div>
         </section>

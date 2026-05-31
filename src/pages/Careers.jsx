@@ -1,21 +1,37 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { 
+    Sparkles, 
+    Globe, 
+    Calendar, 
+    DollarSign, 
+    GraduationCap, 
+    Users, 
+    Palette, 
+    Heart, 
+    FileText, 
+    Phone,
+    Briefcase,
+    Milestone,
+    HelpCircle,
+    UserCheck
+} from 'lucide-react';
 import TeacherApplicationForm from '../components/forms/TeacherApplicationForm';
 import Button from '../components/layout/Button';
 
 const WHY_JOIN = [
-    { icon: '🌍', title: 'Work From Anywhere', desc: 'Fully remote — teach from your home, your city, your country. All you need is a good internet connection and a passion for art.' },
-    { icon: '📅', title: 'Flexible Schedule', desc: 'You choose when you teach. Morning batches, afternoon, evening — build a schedule that fits your life, not the other way around.' },
-    { icon: '💰', title: 'Transparent Pay', desc: 'Competitive, clearly structured compensation. No hidden clauses. You know exactly what you earn per class, every time.' },
-    { icon: '🎓', title: 'Grow with Us', desc: 'Access to pedagogy workshops, peer feedback sessions, and curriculum training. We invest in our teachers continuously.' },
-    { icon: '🌟', title: 'Global Impact', desc: 'Your lessons reach children in 50+ countries. Few career choices give you this scale of meaningful impact from a single session.' },
-    { icon: '🤝', title: 'Supportive Community', desc: 'Join a team of passionate educators who share resources, ideas, and support. You\'re never teaching alone.' },
+    { icon: <Globe size={24} style={{ color: 'var(--maroon)' }} />, title: 'Work From Anywhere', desc: 'Fully remote — teach from your home, your city, your country. All you need is a good internet connection and a passion for art.' },
+    { icon: <Calendar size={24} style={{ color: 'var(--maroon)' }} />, title: 'Flexible Schedule', desc: 'You choose when you teach. Morning batches, afternoon, evening — build a schedule that fits your life, not the other way around.' },
+    { icon: <DollarSign size={24} style={{ color: 'var(--maroon)' }} />, title: 'Transparent Pay', desc: 'Competitive, clearly structured compensation. No hidden clauses. You know exactly what you earn per class, every time.' },
+    { icon: <GraduationCap size={24} style={{ color: 'var(--maroon)' }} />, title: 'Grow with Us', desc: 'Access to pedagogy workshops, peer feedback sessions, and curriculum training. We invest in our teachers continuously.' },
+    { icon: <Sparkles size={24} style={{ color: 'var(--maroon)' }} />, title: 'Global Impact', desc: 'Your lessons reach children in 50+ countries. Few career choices give you this scale of meaningful impact from a single session.' },
+    { icon: <Users size={24} style={{ color: 'var(--maroon)' }} />, title: 'Supportive Community', desc: 'Join a team of passionate educators who share resources, ideas, and support. You\'re never teaching alone.' },
 ];
 
 const POSITIONS = [
     {
         id: 'expert',
-        icon: '👩‍🎨',
+        icon: <Palette size={24} style={{ color: 'var(--maroon)' }} />,
         iconClass: 'expert',
         title: 'Online Art Teacher',
         tags: [
@@ -42,7 +58,7 @@ const POSITIONS = [
     },
     {
         id: 'volunteer',
-        icon: '🙌',
+        icon: <Heart size={24} style={{ color: 'var(--maroon)' }} />,
         iconClass: 'volunteer',
         title: 'Community Volunteer',
         tags: [
@@ -69,10 +85,10 @@ const POSITIONS = [
 ];
 
 const PROCESS = [
-    { icon: '📝', title: 'Apply', desc: 'Fill in the application form below. Tell us about yourself and your relationship with art.' },
-    { icon: '📞', title: 'Intro Call', desc: 'A friendly 20-minute call with our team to understand your experience and answer your questions.' },
-    { icon: '🎨', title: 'Demo Class', desc: 'Conduct a short live demo class with our evaluators acting as students. We look for warmth, clarity, and engagement.' },
-    { icon: '🚀', title: 'Onboard', desc: 'Orientation, curriculum training, and your first assigned batch. You\'re now part of the Miimiko Minds family.' },
+    { icon: <FileText size={24} style={{ color: 'var(--gold)' }} />, title: 'Apply', desc: 'Fill in the application form below. Tell us about yourself and your relationship with art.' },
+    { icon: <Phone size={24} style={{ color: 'var(--gold)' }} />, title: 'Intro Call', desc: 'A friendly 20-minute call with our team to understand your experience and answer your questions.' },
+    { icon: <Palette size={24} style={{ color: 'var(--gold)' }} />, title: 'Demo Class', desc: 'Conduct a short live demo class with our evaluators acting as students. We look for warmth, clarity, and engagement.' },
+    { icon: <Sparkles size={24} style={{ color: 'var(--gold)' }} />, title: 'Onboard', desc: 'Orientation, curriculum training, and your first assigned batch. You\'re now part of the Miimiko Minds family.' },
 ];
 
 const PositionCard = ({ pos }) => {
@@ -142,7 +158,9 @@ const Careers = () => (
                         <Link to="/">Home</Link><span className="sep">›</span>
                         <span className="current">Careers</span>
                     </nav>
-                    <div className="page-hero-eyebrow">🚀 Join the Team</div>
+                    <div className="page-hero-eyebrow" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.35rem' }}>
+                        <Sparkles size={14} /> Join the Team
+                    </div>
                     <h1 className="page-hero-title">
                         Teach Art. Change Lives.<br /><span>Work From Anywhere.</span>
                     </h1>
@@ -166,7 +184,9 @@ const Careers = () => (
         <section className="careers-why">
             <div className="container">
                 <div className="text-center animate-fadeInUp">
-                    <span className="section-label">✨ Why Miimiko Minds</span>
+                    <span className="section-label" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.35rem' }}>
+                        <Sparkles size={14} /> Why Miimiko Minds
+                    </span>
                     <h2 className="section-title" style={{ fontSize: '3rem', marginBottom: '0.5rem' }}>
                         A Team Worth <span style={{ color: 'var(--maroon)' }}>Joining</span>
                     </h2>
@@ -190,7 +210,9 @@ const Careers = () => (
         <section className="careers-positions" id="open-roles">
             <div className="container">
                 <div className="text-center animate-fadeInUp">
-                    <span className="section-label">📋 Open Roles</span>
+                    <span className="section-label" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.35rem' }}>
+                        <Briefcase size={14} /> Open Roles
+                    </span>
                     <h2 className="section-title" style={{ fontSize: '3rem', marginBottom: '0.5rem' }}>
                         Current <span style={{ color: 'var(--maroon)' }}>Openings</span>
                     </h2>
@@ -208,7 +230,9 @@ const Careers = () => (
         <section className="careers-process">
             <div className="container">
                 <div className="text-center animate-fadeInUp">
-                    <span className="section-label">🗺️ The Journey</span>
+                    <span className="section-label" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.35rem' }}>
+                        <Milestone size={14} /> The Journey
+                    </span>
                     <h2 className="section-title" style={{ fontSize: '3rem', marginBottom: '0.5rem' }}>
                         How the <span style={{ color: 'var(--maroon)' }}>Application</span> Works
                     </h2>
@@ -232,7 +256,9 @@ const Careers = () => (
         <section style={{ padding: '7rem 0', background: 'var(--cream)' }} id="apply-form">
             <div className="container">
                 <div className="text-center animate-fadeInUp" style={{ marginBottom: '3.5rem' }}>
-                    <span className="section-label">📝 Apply</span>
+                    <span className="section-label" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.35rem' }}>
+                        <FileText size={14} /> Apply
+                    </span>
                     <h2 className="section-title" style={{ fontSize: '3rem', marginBottom: '0.5rem' }}>
                         Ready to <span style={{ color: 'var(--maroon)' }}>Join Us?</span>
                     </h2>
@@ -256,8 +282,8 @@ const Careers = () => (
         <section style={{ padding: '5rem 0', background: 'var(--grad-maroon)', textAlign: 'center', position: 'relative', overflow: 'hidden' }}>
             <div className="creative-blob" style={{ width: 300, height: 300, background: 'rgba(255,200,87,0.07)', top: -80, right: -60 }} />
             <div className="container animate-fadeInUp">
-                <span className="section-label" style={{ background: 'rgba(255,200,87,0.12)', borderColor: 'rgba(255,200,87,0.3)', color: 'var(--gold)' }}>
-                    🤝 Any Questions?
+                <span className="section-label" style={{ background: 'rgba(255,200,87,0.12)', borderColor: 'rgba(255,200,87,0.3)', color: 'var(--gold)', display: 'inline-flex', alignItems: 'center', gap: '0.35rem' }}>
+                    <HelpCircle size={14} /> Any Questions?
                 </span>
                 <h2 className="section-title on-dark" style={{ fontSize: '2.6rem', margin: '1rem 0 0.75rem' }}>
                     Not sure which role is right for you?

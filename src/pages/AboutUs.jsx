@@ -1,5 +1,19 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { 
+    Sparkles, 
+    BookOpen, 
+    Target, 
+    Eye, 
+    Users, 
+    Lightbulb, 
+    Leaf, 
+    RefreshCw, 
+    Smile, 
+    Globe, 
+    Brain,
+    Palette
+} from 'lucide-react';
 import Button from '../components/layout/Button';
 
 const STATS = [
@@ -11,37 +25,37 @@ const STATS = [
 
 const TEAM = [
     {
-        avatar: '👩‍🎨',
+        avatar: 'AK',
         name: 'Ananya Krishnan',
         role: 'Founder & Creative Director',
         bio: 'A graduate of NID Ahmedabad with 12 years of art education experience. Ananya built Miimiko Minds on the belief that every child is a natural artist.',
     },
     {
-        avatar: '👨‍🏫',
+        avatar: 'RD',
         name: 'Rahul Desai',
         role: 'Head of Curriculum',
         bio: 'Former art teacher at international schools in Singapore and Dubai. Rahul crafts every lesson to balance structure with creative exploration.',
     },
     {
-        avatar: '👩‍💻',
+        avatar: 'PM',
         name: 'Priya Menon',
         role: 'Head of Student Experience',
         bio: 'Ensures every family has a seamless, joyful journey from first demo to graduation. Priya manages our global teacher team with warmth and rigour.',
     },
     {
-        avatar: '🧑‍🎓',
+        avatar: 'VN',
         name: 'Vikram Nair',
         role: 'Lead — Drawing & Sketching',
         bio: 'An award-winning illustrator who has worked with Penguin, Scholastic, and The Hindu. Vikram brings professional craft into every student session.',
     },
     {
-        avatar: '👩‍🎤',
+        avatar: 'DR',
         name: 'Divya Rao',
         role: 'Lead — Painting',
         bio: 'Watercolour and acrylic specialist with exhibitions across Mumbai, Bangalore, and London. Divya teaches children to see colour as a language.',
     },
     {
-        avatar: '🧑‍✈️',
+        avatar: 'KI',
         name: 'Karthik Iyer',
         role: 'Lead — Calligraphy',
         bio: 'Master calligrapher trained in both Eastern and Western scripts. Karthik brings patience and precision to every letterform class.',
@@ -49,12 +63,12 @@ const TEAM = [
 ];
 
 const VALUES = [
-    { icon: '🌱', num: '01', title: 'Child-Led Curiosity', desc: 'We follow the child\'s spark, not a rigid syllabus. Curiosity is the curriculum.' },
-    { icon: '🔄', num: '02', title: 'Process Over Product', desc: 'The joy of making matters more than a perfect result. Mistakes are our best teachers.' },
-    { icon: '😄', num: '03', title: 'Joy as Method', desc: 'If a child isn\'t having fun, we\'re doing it wrong. Delight and rigour go hand in hand.' },
-    { icon: '🌍', num: '04', title: 'Global Perspective', desc: 'Students encounter art from every culture — building empathy that lasts a lifetime.' },
-    { icon: '🧠', num: '05', title: 'Whole-Brain Learning', desc: 'Art activates both analytical and creative thinking, improving performance across all subjects.' },
-    { icon: '🤝', num: '06', title: 'Community & Belonging', desc: 'Every child belongs here. Our classrooms celebrate every background, ability, and style.' },
+    { icon: <Leaf size={32} style={{ color: 'var(--gold-dark)' }} />, num: '01', title: 'Child-Led Curiosity', desc: 'We follow the child\'s spark, not a rigid syllabus. Curiosity is the curriculum.' },
+    { icon: <RefreshCw size={32} style={{ color: 'var(--gold-dark)' }} />, num: '02', title: 'Process Over Product', desc: 'The joy of making matters more than a perfect result. Mistakes are our best teachers.' },
+    { icon: <Smile size={32} style={{ color: 'var(--gold-dark)' }} />, num: '03', title: 'Joy as Method', desc: 'If a child isn\'t having fun, we\'re doing it wrong. Delight and rigour go hand in hand.' },
+    { icon: <Globe size={32} style={{ color: 'var(--gold-dark)' }} />, num: '04', title: 'Global Perspective', desc: 'Students encounter art from every culture — building empathy that lasts a lifetime.' },
+    { icon: <Brain size={32} style={{ color: 'var(--gold-dark)' }} />, num: '05', title: 'Whole-Brain Learning', desc: 'Art activates both analytical and creative thinking, improving performance across all subjects.' },
+    { icon: <Users size={32} style={{ color: 'var(--gold-dark)' }} />, num: '06', title: 'Community & Belonging', desc: 'Every child belongs here. Our classrooms celebrate every background, ability, and style.' },
 ];
 
 const AboutUs = () => (
@@ -88,12 +102,12 @@ const AboutUs = () => (
 
                     {/* Visual */}
                     <div className="about-story-visual animate-slideInLeft">
-                        <div className="about-story-img-wrap">
+                        <div className="about-story-img-wrap" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'var(--cream)' }}>
                             {/*
                 Replace the emoji below with a real image:
                 <img src={new URL('../assets/about-story.jpg', import.meta.url).href} alt="Our story" style={{ width:'100%', height:'100%', objectFit:'cover' }} />
               */}
-                            🦉
+                            <Sparkles size={48} style={{ color: 'var(--maroon)' }} />
                         </div>
                         <div className="about-story-badge">
                             <span className="badge-num">2019</span>
@@ -103,7 +117,9 @@ const AboutUs = () => (
 
                     {/* Text */}
                     <div className="about-story-text animate-slideInRight">
-                        <span className="section-label">📖 How It Started</span>
+                        <span className="section-label" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.35rem' }}>
+                            <BookOpen size={14} /> How It Started
+                        </span>
                         <h2 style={{ marginTop: '1rem' }}>
                             A Classroom of <em>One</em> That Grew Into a<br />Global Movement
                         </h2>
@@ -155,7 +171,9 @@ const AboutUs = () => (
         <section className="about-mission">
             <div className="container">
                 <div className="text-center animate-fadeInUp">
-                    <span className="section-label">🎯 Purpose</span>
+                    <span className="section-label" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.35rem' }}>
+                        <Target size={14} /> Purpose
+                    </span>
                     <h2 className="section-title" style={{ fontSize: '3rem', marginBottom: '0.5rem' }}>
                         Mission & <span style={{ color: 'var(--maroon)' }}>Vision</span>
                     </h2>
@@ -165,7 +183,9 @@ const AboutUs = () => (
                 </div>
                 <div className="mission-vision-grid">
                     <div className="mv-card mission animate-slideInLeft">
-                        <span className="mv-card-icon">🎯</span>
+                        <span className="mv-card-icon" style={{ display: 'block', marginBottom: '1rem' }}>
+                            <Target size={36} style={{ color: 'var(--maroon)' }} />
+                        </span>
                         <h3>Our Mission</h3>
                         <p>
                             To make world-class art education accessible to every child regardless of geography,
@@ -174,7 +194,9 @@ const AboutUs = () => (
                         </p>
                     </div>
                     <div className="mv-card vision animate-slideInRight">
-                        <span className="mv-card-icon">🔭</span>
+                        <span className="mv-card-icon" style={{ display: 'block', marginBottom: '1rem' }}>
+                            <Eye size={36} style={{ color: 'var(--maroon)' }} />
+                        </span>
                         <h3>Our Vision</h3>
                         <p>
                             A world where every child grows up knowing they are creative. Where art is not a
@@ -190,7 +212,9 @@ const AboutUs = () => (
         <section className="about-team">
             <div className="container">
                 <div className="text-center animate-fadeInUp">
-                    <span className="section-label">👥 The People</span>
+                    <span className="section-label" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.35rem' }}>
+                        <Users size={14} /> The People
+                    </span>
                     <h2 className="section-title" style={{ fontSize: '3rem', marginBottom: '0.5rem' }}>
                         Meet the <span style={{ color: 'var(--maroon)' }}>Team Behind</span> Miimiko Minds
                     </h2>
@@ -201,7 +225,7 @@ const AboutUs = () => (
                 <div className="team-grid">
                     {TEAM.map((member, i) => (
                         <div key={i} className={`team-card animate-fadeInUp delay-${(i % 3) * 100 + 100}`}>
-                            <div className="team-avatar">{member.avatar}</div>
+                            <div className="team-avatar" style={{ fontSize: '2.2rem', fontWeight: '800', color: 'var(--gold)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>{member.avatar}</div>
                             <div className="team-name">{member.name}</div>
                             <div className="team-role">{member.role}</div>
                             <p className="team-bio">{member.bio}</p>
@@ -216,7 +240,9 @@ const AboutUs = () => (
             <div className="creative-blob" style={{ width: 280, height: 280, background: 'rgba(122,0,75,0.04)', bottom: -60, right: -60 }} />
             <div className="container">
                 <div className="text-center animate-fadeInUp">
-                    <span className="section-label">💡 What Drives Us</span>
+                    <span className="section-label" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.35rem' }}>
+                        <Lightbulb size={14} /> What Drives Us
+                    </span>
                     <h2 className="section-title" style={{ fontSize: '3rem', marginBottom: '0.5rem' }}>
                         Our Core <span style={{ color: 'var(--maroon)' }}>Values</span>
                     </h2>
@@ -241,8 +267,8 @@ const AboutUs = () => (
         <section style={{ padding: '6rem 0', background: 'var(--grad-maroon)', position: 'relative', overflow: 'hidden' }}>
             <div className="creative-blob" style={{ width: 350, height: 350, background: 'rgba(255,200,87,0.07)', top: -80, right: -80 }} />
             <div className="container text-center animate-fadeInUp">
-                <span className="section-label" style={{ background: 'rgba(255,200,87,0.12)', borderColor: 'rgba(255,200,87,0.3)', color: 'var(--gold)' }}>
-                    🎨 Start the Journey
+                <span className="section-label" style={{ background: 'rgba(255,200,87,0.12)', borderColor: 'rgba(255,200,87,0.3)', color: 'var(--gold)', display: 'inline-flex', alignItems: 'center', gap: '0.35rem' }}>
+                    <Palette size={14} /> Start the Journey
                 </span>
                 <h2 className="section-title on-dark" style={{ fontSize: '3rem', margin: '1rem 0 0.75rem' }}>
                     Ready to See the <span style={{ color: 'var(--gold)' }}>Difference?</span>

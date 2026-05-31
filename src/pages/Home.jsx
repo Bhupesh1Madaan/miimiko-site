@@ -1,5 +1,25 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { 
+    Sparkles, 
+    Pencil, 
+    Palette, 
+    PenTool, 
+    Languages, 
+    Star, 
+    Heart, 
+    BookOpen, 
+    Award, 
+    Users, 
+    Globe, 
+    Clock, 
+    Gift, 
+    Smile, 
+    Brain, 
+    TrendingUp, 
+    Shield,
+    Lightbulb
+} from 'lucide-react';
 import CourseCard from '../components/courses/CourseCard';
 import Button from '../components/layout/Button';
 
@@ -11,7 +31,7 @@ import Button from '../components/layout/Button';
 const BANNERS = [
     {
         id: 1,
-        tag: '✨ New Batch Starting',
+        tag: 'New Batch Starting',
         title: 'Unleash Your Child\'s Creative Genius',
         sub: 'Join live online art classes designed for ages 5–14. Expert teachers, flexible schedules, global community.',
         cta: 'Book Free Demo',
@@ -21,7 +41,7 @@ const BANNERS = [
     },
     {
         id: 2,
-        tag: '🎨 Drawing • Painting • Calligraphy',
+        tag: 'Drawing • Painting • Calligraphy',
         title: 'Three Courses, Infinite Possibilities',
         sub: 'From pencil lines to brushstrokes — discover the course that sets your child\'s creativity on fire.',
         cta: 'Explore Courses',
@@ -31,7 +51,7 @@ const BANNERS = [
     },
     {
         id: 3,
-        tag: '👨‍👩‍👧 Proud Parents Worldwide',
+        tag: 'Proud Parents Worldwide',
         title: 'Trusted by 5,000+ Families Across 50+ Countries',
         sub: 'Real results. Real growth. Real confidence. See what our parents and students have to say.',
         cta: 'Read Stories',
@@ -48,7 +68,7 @@ const HOME_COURSES = [
     {
         id: 'drawing',
         name: 'Drawing',
-        icon: '✏️',
+        icon: <Pencil size={40} style={{ color: 'var(--maroon)' }} />,
         brief: 'Build the foundation of all visual arts. Master lines, proportion, shading, and composition from the ground up.',
         image: null,   // replace with: new URL('../assets/drawing.jpg', import.meta.url).href
         duration: '3 Months',
@@ -59,7 +79,7 @@ const HOME_COURSES = [
     {
         id: 'painting',
         name: 'Painting',
-        icon: '🎨',
+        icon: <Palette size={40} style={{ color: 'var(--maroon)' }} />,
         brief: 'Explore watercolours and acrylics while discovering your unique colour voice and expressive style.',
         image: null,
         duration: '3 Months',
@@ -70,7 +90,7 @@ const HOME_COURSES = [
     {
         id: 'calligraphy',
         name: 'Calligraphy',
-        icon: '🖋️',
+        icon: <PenTool size={40} style={{ color: 'var(--maroon)' }} />,
         brief: 'The meditative craft of beautiful writing — from foundational letterforms to flowing decorative scripts.',
         image: null,
         duration: '2 Months',
@@ -78,15 +98,27 @@ const HOME_COURSES = [
         category: 'All Levels',
         categoryColor: '#9b59b6',
     },
+    {
+        id: 'phonics',
+        name: 'Phonics',
+        icon: <Languages size={40} style={{ color: 'var(--maroon)' }} />,
+        brief: 'Develop strong reading, pronunciation, and spelling skills through interactive phonics classes.',
+        image: null,
+        duration: '3 Months',
+        totalClasses: 24,
+        category: 'Language',
+        categoryColor: '#2ecc71',
+    },
 ];
 
 /* ================================================================
    ENROLL COURSES
    ================================================================ */
 const ENROLL_COURSES = [
-    { id: 'drawing', icon: '✏️', name: 'Drawing', meta: '3 Months · 24 Classes' },
-    { id: 'painting', icon: '🎨', name: 'Painting', meta: '3 Months · 24 Classes' },
-    { id: 'calligraphy', icon: '🖋️', name: 'Calligraphy', meta: '2 Months · 16 Classes' },
+    { id: 'drawing', icon: <Pencil size={20} style={{ color: 'var(--maroon)' }} />, name: 'Drawing', meta: '3 Months · 24 Classes' },
+    { id: 'painting', icon: <Palette size={20} style={{ color: 'var(--maroon)' }} />, name: 'Painting', meta: '3 Months · 24 Classes' },
+    { id: 'calligraphy', icon: <PenTool size={20} style={{ color: 'var(--maroon)' }} />, name: 'Calligraphy', meta: '2 Months · 16 Classes' },
+    { id: 'phonics', icon: <Languages size={20} style={{ color: 'var(--maroon)' }} />, name: 'Phonics', meta: '3 Months · 24 Classes' },
 ];
 
 /* ================================================================
@@ -98,42 +130,42 @@ const TESTIMONIALS = [
         quote: 'My daughter used to be terribly shy. After just two months with Miimiko Minds, she presents her artwork to the whole family with such pride. The transformation is unbelievable.',
         name: 'Priya Sharma',
         role: 'Mother of Aanya, 8',
-        avatar: '👩',
+        avatar: 'PS',
     },
     {
         stars: 5,
         quote: 'The teachers genuinely care. They noticed my son preferred abstract over realistic drawing and tailored lessons around his strengths. That level of attention is rare.',
         name: 'Rahul Mehta',
         role: 'Father of Kabir, 11',
-        avatar: '👨',
+        avatar: 'RM',
     },
     {
         stars: 5,
         quote: 'We are in Canada and worried about the time zone, but scheduling was completely flexible. Now Zara wakes up excited on class days — she calls it her happy hour!',
         name: 'Sunita Kapoor',
         role: 'Mother of Zara, 7',
-        avatar: '👩‍🦱',
+        avatar: 'SK',
     },
     {
         stars: 5,
         quote: 'Calligraphy gave my son patience he never had before. His school teachers have noticed a dramatic improvement in focus and handwriting. Incredible.',
         name: 'Amit Verma',
         role: 'Father of Rohan, 12',
-        avatar: '🧑',
+        avatar: 'AV',
     },
     {
         stars: 5,
         quote: 'We tried two other online art classes before Miimiko Minds. Nothing comes close. The curriculum actually builds on itself — you can see the progress every single week.',
         name: 'Meena Joshi',
         role: 'Mother of Sia, 9',
-        avatar: '👩‍🦰',
+        avatar: 'MJ',
     },
     {
         stars: 5,
         quote: 'My twins attend different courses simultaneously and both have flourished. The platform handles it beautifully and both instructors are exceptional.',
         name: 'Deepak Nair',
         role: 'Father of Riya & Ravi, 10',
-        avatar: '🧔',
+        avatar: 'DN',
     },
 ];
 
@@ -142,25 +174,25 @@ const TESTIMONIALS = [
    ================================================================ */
 const FOCUS_PILLARS = [
     {
-        icon: '🖊️',
+        icon: <Pencil size={24} style={{ color: '#ff9a57' }} />,
         bg: 'rgba(255,152,87,0.12)',
         title: 'Drawing & Sketching',
         desc: 'Line control, shading, perspective — the vocabulary every visual artist needs.',
     },
     {
-        icon: '🎨',
+        icon: <Palette size={24} style={{ color: '#3498db' }} />,
         bg: 'rgba(52,152,219,0.1)',
         title: 'Colour & Painting',
         desc: 'Colour theory, mixing techniques, and expressive brushwork across multiple mediums.',
     },
     {
-        icon: '🖋️',
+        icon: <PenTool size={24} style={{ color: '#9b59b6' }} />,
         bg: 'rgba(155,89,182,0.1)',
         title: 'Calligraphy & Lettering',
         desc: 'Precision, patience, and the timeless beauty of hand-lettered art.',
     },
     {
-        icon: '💡',
+        icon: <Lightbulb size={24} style={{ color: '#ffc857' }} />,
         bg: 'rgba(255,200,87,0.12)',
         title: 'Creative Thinking',
         desc: 'Every class is a prompt to imagine, solve visually, and think beyond the obvious.',
@@ -168,10 +200,10 @@ const FOCUS_PILLARS = [
 ];
 
 const PERSONALITY_TRAITS = [
-    { emoji: '💪', title: 'Confidence', desc: 'A child who creates learns to trust their own voice.' },
-    { emoji: '🧠', title: 'Focus', desc: 'Art builds the concentration muscles used in every subject.' },
-    { emoji: '😊', title: 'Emotional IQ', desc: 'Expression through art develops deep emotional awareness.' },
-    { emoji: '🌱', title: 'Resilience', desc: 'Every mistake is a layer. They learn to keep going.' },
+    { emoji: <Award size={36} style={{ color: 'var(--maroon)' }} />, title: 'Confidence', desc: 'A child who creates learns to trust their own voice.' },
+    { emoji: <Brain size={36} style={{ color: 'var(--maroon)' }} />, title: 'Focus', desc: 'Art builds the concentration muscles used in every subject.' },
+    { emoji: <Smile size={36} style={{ color: 'var(--maroon)' }} />, title: 'Emotional IQ', desc: 'Expression through art develops deep emotional awareness.' },
+    { emoji: <TrendingUp size={36} style={{ color: 'var(--maroon)' }} />, title: 'Resilience', desc: 'Every mistake is a layer. They learn to keep going.' },
 ];
 
 const AGE_OPTIONS = [
@@ -269,22 +301,30 @@ const EnrollSection = () => {
     const navigate = useNavigate();
     const [step, setStep] = useState(0); // 0 = age, 1 = course
     const [selectedAge, setSelectedAge] = useState(null);
-    const [selectedCourse, setSelectedCourse] = useState(null);
+    const [selectedCourses, setSelectedCourses] = useState([]);
 
     const handleAgeSelect = (age) => {
         setSelectedAge(age);
-        setSelectedCourse(null);
+        setSelectedCourses([]);
         // small delay for feedback then slide
         setTimeout(() => setStep(1), 350);
     };
 
     const handleBack = () => {
         setStep(0);
-        setSelectedCourse(null);
+        setSelectedCourses([]);
+    };
+
+    const handleCourseSelect = (courseId) => {
+        setSelectedCourses(prev =>
+            prev.includes(courseId)
+                ? prev.filter(id => id !== courseId)
+                : [...prev, courseId]
+        );
     };
 
     const handleEnroll = () => {
-        navigate(`/contact?course=${selectedCourse}&age=${encodeURIComponent(selectedAge)}`);
+        navigate(`/contact?course=${selectedCourses.join(',')}&age=${encodeURIComponent(selectedAge)}&scroll=form`);
     };
 
     return (
@@ -350,24 +390,27 @@ const EnrollSection = () => {
                             <p className="age-selector-sub">All courses have been adapted for {selectedAge}</p>
 
                             <div className="enroll-courses-grid">
-                                {ENROLL_COURSES.map(course => (
-                                    <div
-                                        key={course.id}
-                                        className={`enroll-course-tile${selectedCourse === course.id ? ' selected' : ''}`}
-                                        onClick={() => setSelectedCourse(course.id)}
-                                        role="button"
-                                        tabIndex={0}
-                                        onKeyDown={e => e.key === 'Enter' && setSelectedCourse(course.id)}
-                                        aria-pressed={selectedCourse === course.id}
-                                    >
-                                        <div className="tile-check">✓</div>
-                                        <div className="enroll-course-tile-content">
-                                            <span className="tile-icon">{course.icon}</span>
-                                            <div className="tile-name">{course.name}</div>
-                                            <div className="tile-meta">{course.meta}</div>
+                                {ENROLL_COURSES.map(course => {
+                                    const isSelected = selectedCourses.includes(course.id);
+                                    return (
+                                        <div
+                                            key={course.id}
+                                            className={`enroll-course-tile${isSelected ? ' selected' : ''}`}
+                                            onClick={() => handleCourseSelect(course.id)}
+                                            role="button"
+                                            tabIndex={0}
+                                            onKeyDown={e => e.key === 'Enter' && handleCourseSelect(course.id)}
+                                            aria-pressed={isSelected}
+                                        >
+                                            <div className="tile-check">✓</div>
+                                            <div className="enroll-course-tile-content">
+                                                <span className="tile-icon">{course.icon}</span>
+                                                <div className="tile-name">{course.name}</div>
+                                                <div className="tile-meta">{course.meta}</div>
+                                            </div>
                                         </div>
-                                    </div>
-                                ))}
+                                    );
+                                })}
                             </div>
 
                             <div className="enroll-cta-row">
@@ -379,10 +422,10 @@ const EnrollSection = () => {
                                     size="lg"
                                     arrow
                                     onClick={handleEnroll}
-                                    disabled={!selectedCourse}
+                                    disabled={selectedCourses.length === 0}
                                     style={{
-                                        opacity: selectedCourse ? 1 : 0.45,
-                                        cursor: selectedCourse ? 'pointer' : 'not-allowed',
+                                        opacity: selectedCourses.length > 0 ? 1 : 0.45,
+                                        cursor: selectedCourses.length > 0 ? 'pointer' : 'not-allowed',
                                         transition: 'opacity 0.3s ease',
                                     }}
                                 >
@@ -390,7 +433,7 @@ const EnrollSection = () => {
                                 </Button>
                             </div>
 
-                            {!selectedCourse && (
+                            {selectedCourses.length === 0 && (
                                 <p style={{ textAlign: 'center', fontSize: '0.85rem', color: 'var(--text-muted)', marginTop: '0.75rem' }}>
                                     Select a course above to enable enrollment
                                 </p>
@@ -424,7 +467,9 @@ const Home = () => {
             <section className="courses-section">
                 <div className="container">
                     <div className="text-center animate-fadeInUp">
-                        <span className="section-label">📚 What We Teach</span>
+                        <span className="section-label" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.35rem' }}>
+                            <BookOpen size={14} /> What We Teach
+                        </span>
                         <h2 className="section-title" style={{ fontSize: '3rem', marginBottom: '0.5rem' }}>
                             Our <span >Signature Courses</span>
                         </h2>
@@ -458,7 +503,9 @@ const Home = () => {
 
                 <div className="container">
                     <div className="text-center animate-fadeInUp" style={{ marginBottom: '4rem' }}>
-                        <span className="section-label">🌟 Our Approach</span>
+                        <span className="section-label" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.35rem' }}>
+                            <Sparkles size={14} /> Our Approach
+                        </span>
                         <h2 className="section-title" style={{ fontSize: '3rem', marginBottom: '0.5rem' }}>
                             More Than Art — <span >We Grow Humans</span>
                         </h2>
@@ -527,8 +574,8 @@ const Home = () => {
 
                         {/* Left: CTA text */}
                         <div className="miimiko-left animate-slideInLeft">
-                            <span className="section-label" style={{ background: 'rgba(255,200,87,0.12)', borderColor: 'rgba(255,200,87,0.3)', color: 'var(--gold)' }}>
-                                🎁 Completely Free
+                            <span className="section-label" style={{ background: 'rgba(255,200,87,0.12)', borderColor: 'rgba(255,200,87,0.3)', color: 'var(--gold)', display: 'inline-flex', alignItems: 'center', gap: '0.35rem' }}>
+                                <Gift size={14} /> Completely Free
                             </span>
                             <h2 className="miimiko-title mt-sm">
                                 Book Your First<br />
@@ -538,7 +585,7 @@ const Home = () => {
                             <p className="miimiko-desc">
                                 Before you commit to anything, let your child experience the magic firsthand.
                                 A live 1-on-1 session, tailored to their age and interests — no pressure, no obligations.
-                            </p>
+                              </p>
                             <div className="miimiko-perks">
                                 {[
                                     'Live session with a certified art teacher',
@@ -561,14 +608,16 @@ const Home = () => {
 
                         {/* Right: Mascot card */}
                         <div className="miimiko-card animate-slideInRight">
-                            <span className="miimiko-mascot">🦉</span>
-                            <h3>Meet Miimiko</h3>
+                            <span className="miimiko-mascot" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                <Sparkles size={36} style={{ color: 'var(--gold)' }} />
+                            </span>
+                            <h3>Meet Miimiko Minds</h3>
                             <p>
-                                Miimiko is our beloved mascot — a curious, creative little owl who guides every student
-                                through their artistic journey with warmth, playfulness, and wisdom.
+                                Miimiko Minds is our creative philosophy — an artistic guide that helps every student
+                                unfold their creative vision with confidence, playfulness, and wisdom.
                             </p>
-                            <div className="proud-parents-strip">
-                                🏆 &nbsp; Join <strong style={{ margin: '0 4px' }}>5,000+</strong> Proud Parents Worldwide
+                            <div className="proud-parents-strip" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.35rem' }}>
+                                <Award size={16} style={{ color: 'var(--gold)' }} /> Join <strong style={{ margin: '0 4px' }}>5,000+</strong> Proud Parents Worldwide
                             </div>
 
                             {/* Mini stats */}
@@ -576,7 +625,7 @@ const Home = () => {
                                 {[
                                     { val: '50+', lbl: 'Countries' },
                                     { val: '4.9★', lbl: 'Rating' },
-                                    { val: '3', lbl: 'Courses' },
+                                    { val: '4', lbl: 'Courses' },
                                     { val: '5–14', lbl: 'Age Group' },
                                 ].map((s, i) => (
                                     <div key={i} style={{ textAlign: 'center', background: 'rgba(255,255,255,0.07)', borderRadius: 12, padding: '0.85rem' }}>
@@ -591,13 +640,13 @@ const Home = () => {
             </section>
 
 
-            {/* ══════════════════════════════════════
-          4B. TESTIMONIALS
-      ══════════════════════════════════════ */}
+            {/* ── Testimonials ── */}
             <section className="testimonials-section">
                 <div className="container">
                     <div className="text-center animate-fadeInUp">
-                        <span className="section-label">❤️ Parent Stories</span>
+                        <span className="section-label" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.35rem' }}>
+                            <Heart size={14} /> Parent Stories
+                        </span>
                         <h2 className="section-title" style={{ fontSize: '3rem', marginBottom: '0.5rem' }}>
                             What Proud Parents <span >Are Saying</span>
                         </h2>
@@ -612,7 +661,7 @@ const Home = () => {
                                 <div className="testimonial-stars">{'★'.repeat(t.stars)}</div>
                                 <p className="testimonial-quote">{t.quote}</p>
                                 <div className="testimonial-author">
-                                    <div className="testimonial-avatar">{t.avatar}</div>
+                                    <div className="testimonial-avatar" style={{ fontSize: '0.85rem', fontWeight: 'bold', color: 'var(--gold)' }}>{t.avatar}</div>
                                     <div className="testimonial-author-info">
                                         <strong>{t.name}</strong>
                                         <span>{t.role}</span>
@@ -625,14 +674,14 @@ const Home = () => {
             </section>
 
 
-            {/* ══════════════════════════════════════
-          4C. OUR PHILOSOPHY
-      ══════════════════════════════════════ */}
+            {/* ── Our Philosophy ── */}
             <section className="philosophy-section">
                 <div className="creative-blob" style={{ width: 300, height: 300, background: 'rgba(122,0,75,0.04)', bottom: -60, right: -60 }} />
                 <div className="container">
                     <div className="text-center animate-fadeInUp" style={{ marginBottom: '4rem' }}>
-                        <span className="section-label">📖 What We Believe</span>
+                        <span className="section-label" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.35rem' }}>
+                            <BookOpen size={14} /> What We Believe
+                        </span>
                         <h2 className="section-title" style={{ fontSize: '3rem', marginBottom: '0.5rem' }}>
                             Our <span>Approach</span>
                         </h2>

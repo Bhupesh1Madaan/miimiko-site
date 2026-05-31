@@ -4382,4 +4382,58 @@ ol {
   .header-logo-tagline {
     font-size: 0.62rem !important;
   }
+}
+
+/* Container Mobile Responsiveness Override */
+@media (max-width: 768px) {
+  .container {
+    padding: 0 1.25rem !important;
+  }
+}
+
+/* Student Artwork Gallery Styles */
+.artwork-gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+.artwork-card {
+  position: relative;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  background: var(--white);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  aspect-ratio: 4 / 3;
+}
+.artwork-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+.artwork-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-md);
+}
+.artwork-card:hover img {
+  transform: scale(1.05);
+}
+.artwork-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);
+  padding: 1.5rem 1rem 1rem;
+  color: var(--white);
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  font-weight: 600;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+.artwork-card:hover .artwork-overlay {
+  opacity: 1;
 }

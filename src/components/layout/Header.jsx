@@ -1,28 +1,36 @@
 import React, { useState, useEffect } from 'react';
 import { Link, NavLink, useLocation } from 'react-router-dom';
+import { Pencil, Palette, PenTool, Languages } from 'lucide-react';
 import Button from './Button';
 
 const COURSES_DROPDOWN = [
     {
         id: 'drawing',
-        icon: '✏️',
+        icon: <Pencil size={18} style={{ color: 'rgb(255,152,87)' }} />,
         bg: 'rgba(255,152,87,0.12)',
         name: 'Drawing',
         meta: '3 Months · 24 Classes · Ages 5–14',
     },
     {
         id: 'painting',
-        icon: '🎨',
+        icon: <Palette size={18} style={{ color: 'rgb(52,152,219)' }} />,
         bg: 'rgba(52,152,219,0.1)',
         name: 'Painting',
         meta: '3 Months · 24 Classes · Ages 5–14',
     },
     {
         id: 'calligraphy',
-        icon: '🖋️',
+        icon: <PenTool size={18} style={{ color: 'rgb(155,89,182)' }} />,
         bg: 'rgba(155,89,182,0.1)',
         name: 'Calligraphy',
         meta: '2 Months · 16 Classes · Ages 7–14',
+    },
+    {
+        id: 'phonics',
+        icon: <Languages size={18} style={{ color: 'rgb(46,204,113)' }} />,
+        bg: 'rgba(46,204,113,0.1)',
+        name: 'Phonics',
+        meta: '3 Months · 24 Classes · Ages 5–9',
     },
 ];
 
@@ -153,10 +161,10 @@ const Header = () => {
 
                 {/* ── Desktop CTAs ── */}
                 <div className="header-cta">
-                    <Button variant="outline" size="sm" to="/contact">
+                    <Button variant="outline" size="sm" to="/contact?scroll=form">
                         Raise a Query
                     </Button>
-                    <Button variant="gold" size="sm" to="/contact" arrow>
+                    <Button variant="gold" size="sm" to="/contact?scroll=form" arrow>
                         Book Free Demo
                     </Button>
                 </div>
@@ -307,10 +315,10 @@ const Header = () => {
 
                 {/* Mobile CTAs */}
                 <div className="mobile-menu-cta">
-                    <Button variant="outline" to="/contact" onClick={() => setMenuOpen(false)} style={{ width: '100%', justifyContent: 'center' }}>
+                    <Button variant="outline" to="/contact?scroll=form" onClick={() => setMenuOpen(false)} style={{ width: '100%', justifyContent: 'center' }}>
                         Raise a Query
                     </Button>
-                    <Button variant="gold" to="/contact" arrow onClick={() => setMenuOpen(false)} style={{ width: '100%', justifyContent: 'center' }}>
+                    <Button variant="gold" to="/contact?scroll=form" arrow onClick={() => setMenuOpen(false)} style={{ width: '100%', justifyContent: 'center' }}>
                         Book Free Demo
                     </Button>
                 </div>

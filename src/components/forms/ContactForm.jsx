@@ -1,11 +1,22 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
+import { ShieldCheck, Sparkles } from 'lucide-react';
 import Button from '../layout/Button';
+
+const FormField = ({ label, required, error, children }) => (
+    <div className="form-field">
+        <label className="form-label">{label}{required && <span>*</span>}</label>
+        {children}
+        {error && <span className="form-error-msg">{error}</span>}
+    </div>
+);
 
 const INQUIRY_TYPES = [
     'Book a Free Demo Class',
     'Course Enquiry — Drawing',
     'Course Enquiry — Painting',
     'Course Enquiry — Calligraphy',
+    'Course Enquiry — Phonics',
     'General Question',
     'Partnership / Collaboration',
     'Career / Teaching',
@@ -31,6 +42,7 @@ const validate = (fields) => {
 };
 
 const ContactForm = ({ prefillInquiry = '', compact = false }) => {
+    const [searchParams] = useSearchParams();
     const [fields, setFields] = useState({
         parentName: '',
         childName: '',
@@ -41,6 +53,54 @@ const ContactForm = ({ prefillInquiry = '', compact = false }) => {
         inquiryType: prefillInquiry || '',
         message: '',
     });
+
+    useEffect(() => {
+        const queryCourse = searchParams.get('course');
+        const queryAge = searchParams.get('age');
+        
+        let initialInquiry = prefillInquiry || '';
+        let initialMessage = '';
+        let initialAge = '';
+
+        if (queryCourse) {
+            const coursesList = queryCourse.split(',');
+            if (coursesList.length === 1) {
+                const singleCourse = coursesList[0].toLowerCase();
+                if (singleCourse === 'drawing') initialInquiry = 'Course Enquiry — Drawing';
+                else if (singleCourse === 'painting') initialInquiry = 'Course Enquiry — Painting';
+                else if (singleCourse === 'calligraphy') initialInquiry = 'Course Enquiry — Calligraphy';
+                else if (singleCourse === 'phonics') initialInquiry = 'Course Enquiry — Phonics';
+            } else {
+                initialInquiry = 'Book a Free Demo Class';
+                const prettyCourses = coursesList.map(c => {
+                    const clean = c.trim().toLowerCase();
+                    return clean.charAt(0).toUpperCase() + clean.slice(1);
+                });
+                initialMessage = `Hello, I would like to enquire about multiple courses: ${prettyCourses.join(', ')}.`;
+            }
+        }
+
+        if (queryAge) {
+            const matchingAge = AGE_OPTIONS.find(a => a.toLowerCase().includes(queryAge.toLowerCase()) || queryAge.toLowerCase().includes(a.toLowerCase()));
+            if (matchingAge) {
+                initialAge = matchingAge;
+            } else {
+                const match = queryAge.match(/(\d+)/);
+                if (match) {
+                    const parsedAgeNum = match[1];
+                    const opt = AGE_OPTIONS.find(a => a.startsWith(parsedAgeNum));
+                    if (opt) initialAge = opt;
+                }
+            }
+        }
+
+        setFields(prev => ({
+            ...prev,
+            inquiryType: initialInquiry || prev.inquiryType,
+            childAge: initialAge || prev.childAge,
+            message: initialMessage || prev.message,
+        }));
+    }, [searchParams, prefillInquiry]);
 
     const [errors, setErrors] = useState({});
     const [submitted, setSubmitted] = useState(false);
@@ -66,7 +126,9 @@ const ContactForm = ({ prefillInquiry = '', compact = false }) => {
     if (submitted) {
         return (
             <div className="form-success animate-scaleIn">
-                <div className="form-success-icon">🎉</div>
+                <div className="form-success-icon" style={{ display: 'flex', justifyContent: 'center', marginBottom: '1rem' }}>
+                    <Sparkles size={48} style={{ color: 'var(--gold)' }} />
+                </div>
                 <h4>We've received your message!</h4>
                 <p>
                     Thank you for reaching out. Our team will contact you within 24 hours to
@@ -79,20 +141,12 @@ const ContactForm = ({ prefillInquiry = '', compact = false }) => {
         );
     }
 
-    const F = ({ name, label, required, children }) => (
-        <div className="form-field">
-            <label className="form-label">{label}{required && <span>*</span>}</label>
-            {children}
-            {errors[name] && <span className="form-error-msg">{errors[name]}</span>}
-        </div>
-    );
-
     return (
         <form onSubmit={handleSubmit} noValidate>
             <div className="contact-form-body">
 
                 <div className="form-row">
-                    <F name="parentName" label="Parent / Guardian Name" required>
+                    <FormField label="Parent / Guardian Name" required error={errors.parentName}>
                         <input
                             className={`form-input${errors.parentName ? ' error' : ''}`}
                             type="text"
@@ -101,8 +155,8 @@ const ContactForm = ({ prefillInquiry = '', compact = false }) => {
                             onChange={set('parentName')}
                             autoComplete="name"
                         />
-                    </F>
-                    <F name="childName" label="Child's Name">
+                    </FormField>
+                    <FormField label="Child's Name" error={errors.childName}>
                         <input
                             className="form-input"
                             type="text"
@@ -110,11 +164,11 @@ const ContactForm = ({ prefillInquiry = '', compact = false }) => {
                             value={fields.childName}
                             onChange={set('childName')}
                         />
-                    </F>
+                    </FormField>
                 </div>
 
                 <div className="form-row">
-                    <F name="email" label="Email Address" required>
+                    <FormField label="Email Address" required error={errors.email}>
                         <input
                             className={`form-input${errors.email ? ' error' : ''}`}
                             type="email"
@@ -123,8 +177,8 @@ const ContactForm = ({ prefillInquiry = '', compact = false }) => {
                             onChange={set('email')}
                             autoComplete="email"
                         />
-                    </F>
-                    <F name="phone" label="Phone / WhatsApp" required>
+                    </FormField>
+                    <FormField label="Phone / WhatsApp" required error={errors.phone}>
                         <input
                             className={`form-input${errors.phone ? ' error' : ''}`}
                             type="tel"
@@ -133,11 +187,11 @@ const ContactForm = ({ prefillInquiry = '', compact = false }) => {
                             onChange={set('phone')}
                             autoComplete="tel"
                         />
-                    </F>
+                    </FormField>
                 </div>
 
                 <div className="form-row">
-                    <F name="childAge" label="Child's Age" required>
+                    <FormField label="Child's Age" required error={errors.childAge}>
                         <div className="form-select-wrap">
                             <select
                                 className={`form-select${errors.childAge ? ' error' : ''}`}
@@ -148,8 +202,8 @@ const ContactForm = ({ prefillInquiry = '', compact = false }) => {
                                 {AGE_OPTIONS.map(a => <option key={a} value={a}>{a}</option>)}
                             </select>
                         </div>
-                    </F>
-                    <F name="country" label="Country">
+                    </FormField>
+                    <FormField label="Country" error={errors.country}>
                         <input
                             className="form-input"
                             type="text"
@@ -157,10 +211,10 @@ const ContactForm = ({ prefillInquiry = '', compact = false }) => {
                             value={fields.country}
                             onChange={set('country')}
                         />
-                    </F>
+                    </FormField>
                 </div>
 
-                <F name="inquiryType" label="What are you looking for?" required>
+                <FormField label="What are you looking for?" required error={errors.inquiryType}>
                     <div className="form-select-wrap">
                         <select
                             className={`form-select${errors.inquiryType ? ' error' : ''}`}
@@ -171,9 +225,9 @@ const ContactForm = ({ prefillInquiry = '', compact = false }) => {
                             {INQUIRY_TYPES.map(t => <option key={t} value={t}>{t}</option>)}
                         </select>
                     </div>
-                </F>
+                </FormField>
 
-                <F name="message" label="Your Message" required>
+                <FormField label="Your Message" required error={errors.message}>
                     <textarea
                         className={`form-textarea${errors.message ? ' error' : ''}`}
                         placeholder="Tell us a bit about your child and what you're hoping to achieve through art…"
@@ -181,7 +235,7 @@ const ContactForm = ({ prefillInquiry = '', compact = false }) => {
                         onChange={set('message')}
                         rows={compact ? 4 : 5}
                     />
-                </F>
+                </FormField>
 
                 <Button
                     type="submit"
@@ -194,8 +248,8 @@ const ContactForm = ({ prefillInquiry = '', compact = false }) => {
                     {loading ? '✦ Sending…' : 'Send Message'}
                 </Button>
 
-                <p style={{ fontSize: '0.78rem', color: 'var(--text-muted)', textAlign: 'center', marginTop: '-0.5rem' }}>
-                    🔒 Your information is safe with us. We never share your data.
+                <p style={{ fontSize: '0.78rem', color: 'var(--text-muted)', textAlign: 'center', marginTop: '-0.5rem', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.25rem' }}>
+                    <ShieldCheck size={14} style={{ color: 'var(--maroon)' }} /> Your information is safe with us. We never share your data.
                 </p>
             </div>
         </form>

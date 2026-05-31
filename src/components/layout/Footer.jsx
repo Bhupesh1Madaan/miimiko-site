@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { Facebook, Instagram, Youtube, Twitter, Mail, Phone } from 'lucide-react';
 import Button from './Button';
 
 const QUICK_LINKS = [
@@ -17,10 +18,10 @@ const COURSES = [
 ];
 
 const SOCIAL = [
-    { label: '📘', href: 'https://facebook.com', title: 'Facebook' },
-    { label: '📸', href: 'https://instagram.com', title: 'Instagram' },
-    { label: '▶️', href: 'https://youtube.com', title: 'YouTube' },
-    { label: '🐦', href: 'https://twitter.com', title: 'Twitter' },
+    { icon: <Facebook size={18} />, href: 'https://facebook.com', title: 'Facebook' },
+    { icon: <Instagram size={18} />, href: 'https://instagram.com', title: 'Instagram' },
+    { icon: <Youtube size={18} />, href: 'https://youtube.com', title: 'YouTube' },
+    { icon: <Twitter size={18} />, href: 'https://twitter.com', title: 'Twitter' },
 ];
 
 const Footer = () => {
@@ -52,7 +53,7 @@ const Footer = () => {
                         Unfold your Creative Vision with Miimiko Minds - Your Gateway to Artistic Mastery. Join us to explore a world of creativity and transform your passion into skill.
                     </p>
                     <div className="footer-social">
-                        {SOCIAL.map(({ label, href, title }) => (
+                        {SOCIAL.map(({ icon, href, title }) => (
                             <a
                                 key={title}
                                 href={href}
@@ -61,8 +62,9 @@ const Footer = () => {
                                 className="footer-social-link"
                                 aria-label={title}
                                 title={title}
+                                style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}
                             >
-                                {label}
+                                {icon}
                             </a>
                         ))}
                     </div>
@@ -96,27 +98,22 @@ const Footer = () => {
                 <div>
                     <h4 className="footer-col-title">Get In Touch</h4>
 
-                    {/* <div className="footer-contact-item">
-                        <div className="footer-contact-icon">📍</div>
-                        <span>Global Online Academy<br />Available Worldwide</span>
-                    </div> */}
-
-                    <div className="footer-contact-item">
-                        <div className="footer-contact-icon">📧</div>
+                    <div className="footer-contact-item" style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
+                        <Mail size={16} style={{ color: 'var(--gold)', flexShrink: 0 }} />
                         <a href="mailto:support@miimiko.com" style={{ color: 'inherit' }}>
                             support@miimiko.com
                         </a>
                     </div>
 
-                    <div className="footer-contact-item">
-                        <div className="footer-contact-icon">📞</div>
+                    <div className="footer-contact-item" style={{ display: 'flex', alignItems: 'center', gap: '0.65rem', marginTop: '0.75rem' }}>
+                        <Phone size={16} style={{ color: 'var(--gold)', flexShrink: 0 }} />
                         <a href="tel:+918799757218" style={{ color: 'inherit' }}>
                             +91 87997 57218
                         </a>
                     </div>
 
                     <div style={{ marginTop: '1.5rem' }}>
-                        <Button variant="gold" size="sm" to="/contact" arrow>
+                        <Button variant="gold" size="sm" to="/contact?scroll=form" arrow>
                             Book Free Demo
                         </Button>
                     </div>
