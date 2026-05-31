@@ -1628,12 +1628,15 @@ ol {
 .banner-section {
   position: relative;
   overflow: hidden;
+  width: 100%;
+  max-width: 100%;
 }
 
 .banner-track {
   display: flex;
   transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
   will-change: transform;
+  width: 100%;
 }
 
 .banner-slide {
@@ -1644,6 +1647,8 @@ ol {
   min-height: 640px;
   display: flex;
   align-items: flex-end;
+  width: 100%;
+  max-width: 100%;
 }
 
 .banner-slide-img {
@@ -2206,6 +2211,7 @@ ol {
   padding: 6rem 0;
   background: transparent;
   position: relative;
+  overflow: hidden;
 }
 
 .philosophy-inner {
@@ -2318,6 +2324,8 @@ ol {
   box-shadow: var(--shadow-lg);
   background: var(--white);
   margin-top: 3rem;
+  width: 100%;
+  max-width: 100%;
 }
 
 /* Step track */
@@ -2325,6 +2333,7 @@ ol {
   display: flex;
   transition: transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
   will-change: transform;
+  width: 100%;
 }
 
 .enroll-step {
@@ -4291,7 +4300,11 @@ ol {
 
 /* Hamburger lines (mobile) */
 .header:not(.scrolled) .hamburger-line {
-  background: var(--cream);
+  background: var(--white);
+}
+
+.header.menu-open .hamburger-line {
+  background: var(--maroon) !important;
 }
 
 .sk {
@@ -4436,4 +4449,56 @@ ol {
 }
 .artwork-card:hover .artwork-overlay {
   opacity: 1;
+}
+
+/* ============================================================
+   MOBILE RESPONSIVENESS AND ALIGNMENT OVERRIDES (viewport <= 768px)
+   ============================================================ */
+@media (max-width: 768px) {
+  /* Fix breaking static br inside titles on mobile */
+  .page-hero-title br,
+  .miimiko-title br,
+  .section-title br,
+  .focus-personality-header br {
+    display: none !important;
+  }
+
+  /* Make sure header container is aligned */
+  .header-inner {
+    padding: 0 1.25rem;
+  }
+}
+
+@media (max-width: 500px) {
+  /* Stack the enrollment wizard CTA buttons */
+  .enroll-cta-row {
+    flex-direction: column-reverse;
+    align-items: stretch;
+    gap: 0.85rem;
+    width: 100%;
+    margin-top: 2rem;
+  }
+  
+  .enroll-cta-row .btn,
+  .enroll-cta-row button {
+    width: 100% !important;
+    justify-content: center;
+    text-align: center;
+  }
+
+  /* Shrink age chips slightly to prevent wrap clipping */
+  .age-chip {
+    padding: 0.6rem 1.25rem !important;
+    font-size: 0.9rem !important;
+  }
+  
+  .age-chips {
+    gap: 0.6rem !important;
+    margin-bottom: 1.75rem !important;
+  }
+
+  /* Reduce padding of Mascot card on mobile to fit text perfectly */
+  .miimiko-card {
+    padding: 2.25rem 1.5rem !important;
+  }
 }

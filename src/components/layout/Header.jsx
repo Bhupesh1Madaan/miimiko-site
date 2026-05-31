@@ -113,7 +113,7 @@ const Header = () => {
     }, [menuOpen]);
 
     return (
-        <header className={`header${scrolled ? ' scrolled' : ''}`}>
+        <header className={`header${scrolled ? ' scrolled' : ''}${menuOpen ? ' menu-open' : ''}`}>
             <div className="header-inner">
 
                 {/* ── Logo ── */}
