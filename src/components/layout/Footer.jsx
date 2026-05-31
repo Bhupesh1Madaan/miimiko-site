@@ -13,8 +13,8 @@ const QUICK_LINKS = [
 
 const COURSES = [
     { label: 'Drawing', to: '/courses/drawing' },
-    { label: 'Painting', to: '/courses/painting' },
     { label: 'Calligraphy', to: '/courses/calligraphy' },
+    { label: 'Phonics', to: '/courses/phonics' },
 ];
 
 const SOCIAL = [

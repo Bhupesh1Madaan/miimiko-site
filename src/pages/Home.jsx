@@ -23,6 +23,10 @@ import {
 import CourseCard from '../components/courses/CourseCard';
 import Button from '../components/layout/Button';
 
+import drawingImg from '../assets/Drawing.jpeg';
+import calligraphyImg from '../assets/Calligraphy.jpeg';
+import phonicsImg from '../assets/Phonics.jpeg';
+
 /* ================================================================
    BANNER DATA
    Swap `gradient` with `image: new URL('../assets/banner1.jpg', import.meta.url).href`
@@ -41,7 +45,7 @@ const BANNERS = [
     },
     {
         id: 2,
-        tag: 'Drawing • Painting • Calligraphy',
+        tag: 'Drawing • Calligraphy • Phonics',
         title: 'Three Courses, Infinite Possibilities',
         sub: 'From pencil lines to brushstrokes — discover the course that sets your child\'s creativity on fire.',
         cta: 'Explore Courses',
@@ -52,9 +56,9 @@ const BANNERS = [
     {
         id: 3,
         tag: 'Proud Parents Worldwide',
-        title: 'Trusted by 5,000+ Families Across 50+ Countries',
-        sub: 'Real results. Real growth. Real confidence. See what our parents and students have to say.',
-        cta: 'Read Stories',
+        title: 'Trusted by 500+ Families Across 5+ Countries',
+        sub: 'Real results. Real growth. Real confidence. Join us today and start your child\'s journey.',
+        cta: 'Book Free Demo',
         ctaLink: '/contact',
         gradient: 'linear-gradient(135deg, #2a0016 0%, #7a004b 60%, #ffc857 100%)',
         image: null,
@@ -70,29 +74,18 @@ const HOME_COURSES = [
         name: 'Drawing',
         icon: <Pencil size={40} style={{ color: 'var(--maroon)' }} />,
         brief: 'Build the foundation of all visual arts. Master lines, proportion, shading, and composition from the ground up.',
-        image: null,   // replace with: new URL('../assets/drawing.jpg', import.meta.url).href
+        image: drawingImg,
         duration: '3 Months',
         totalClasses: 24,
         category: 'Foundation',
         categoryColor: '#ff9a57',
     },
     {
-        id: 'painting',
-        name: 'Painting',
-        icon: <Palette size={40} style={{ color: 'var(--maroon)' }} />,
-        brief: 'Explore watercolours and acrylics while discovering your unique colour voice and expressive style.',
-        image: null,
-        duration: '3 Months',
-        totalClasses: 24,
-        category: 'Intermediate',
-        categoryColor: '#3498db',
-    },
-    {
         id: 'calligraphy',
         name: 'Calligraphy',
         icon: <PenTool size={40} style={{ color: 'var(--maroon)' }} />,
         brief: 'The meditative craft of beautiful writing — from foundational letterforms to flowing decorative scripts.',
-        image: null,
+        image: calligraphyImg,
         duration: '2 Months',
         totalClasses: 16,
         category: 'All Levels',
@@ -103,7 +96,7 @@ const HOME_COURSES = [
         name: 'Phonics',
         icon: <Languages size={40} style={{ color: 'var(--maroon)' }} />,
         brief: 'Develop strong reading, pronunciation, and spelling skills through interactive phonics classes.',
-        image: null,
+        image: phonicsImg,
         duration: '3 Months',
         totalClasses: 24,
         category: 'Language',
@@ -116,7 +109,6 @@ const HOME_COURSES = [
    ================================================================ */
 const ENROLL_COURSES = [
     { id: 'drawing', icon: <Pencil size={20} style={{ color: 'var(--maroon)' }} />, name: 'Drawing', meta: '3 Months · 24 Classes' },
-    { id: 'painting', icon: <Palette size={20} style={{ color: 'var(--maroon)' }} />, name: 'Painting', meta: '3 Months · 24 Classes' },
     { id: 'calligraphy', icon: <PenTool size={20} style={{ color: 'var(--maroon)' }} />, name: 'Calligraphy', meta: '2 Months · 16 Classes' },
     { id: 'phonics', icon: <Languages size={20} style={{ color: 'var(--maroon)' }} />, name: 'Phonics', meta: '3 Months · 24 Classes' },
 ];
@@ -340,10 +332,10 @@ const EnrollSection = () => {
                     </p>
                 </div>
 
-                <div className="enroll-flow-wrapper">
+                <div className={`enroll-flow-wrapper step-${step}`}>
 
                     {/* Step indicator */}
-                    <div style={{ padding: '2.5rem 4rem 0', display: 'flex', justifyContent: 'center' }}>
+                    <div style={{ padding: '2rem 3rem 0', display: 'flex', justifyContent: 'center' }}>
                         <div className="enroll-steps-indicator">
                             <div className="enroll-step-dot">
                                 <div className={`enroll-step-circle${step === 0 ? ' active' : ' done'}`}>
@@ -359,87 +351,87 @@ const EnrollSection = () => {
                         </div>
                     </div>
 
-                    {/* Sliding track */}
-                    <div className="enroll-track" style={{ transform: `translateX(-${step * 100}%)` }}>
-
-                        {/* ── Step 1: Age ── */}
-                        <div className="enroll-step">
-                            <h3 className="age-selector-title">How old is your child?</h3>
-                            <p className="age-selector-sub">We tailor every class to the right developmental stage</p>
-                            <div className="age-chips">
-                                {AGE_OPTIONS.map(age => (
-                                    <button
-                                        key={age}
-                                        className={`age-chip${selectedAge === age ? ' selected' : ''}`}
-                                        onClick={() => handleAgeSelect(age)}
-                                    >
-                                        {age}
-                                    </button>
-                                ))}
-                            </div>
-                            <p style={{ textAlign: 'center', fontSize: '0.88rem', color: 'var(--text-muted)' }}>
-                                Select an age to continue →
-                            </p>
-                        </div>
-
-                        {/* ── Step 2: Course ── */}
-                        <div className="enroll-step">
-                            <h3 className="age-selector-title">
-                                Perfect! Now pick one or more courses for your {selectedAge}-old
-                            </h3>
-                            <p className="age-selector-sub">All courses have been adapted for {selectedAge}</p>
-
-                            <div className="enroll-courses-grid">
-                                {ENROLL_COURSES.map(course => {
-                                    const isSelected = selectedCourses.includes(course.id);
-                                    return (
-                                        <div
-                                            key={course.id}
-                                            className={`enroll-course-tile${isSelected ? ' selected' : ''}`}
-                                            onClick={() => handleCourseSelect(course.id)}
-                                            role="button"
-                                            tabIndex={0}
-                                            onKeyDown={e => e.key === 'Enter' && handleCourseSelect(course.id)}
-                                            aria-pressed={isSelected}
+                    {/* Step container */}
+                    <div className="enroll-step-container">
+                        {step === 0 && (
+                            <div className="enroll-step animate-fadeIn">
+                                <h3 className="age-selector-title">How old is your child?</h3>
+                                <p className="age-selector-sub">We tailor every class to the right developmental stage</p>
+                                <div className="age-chips">
+                                    {AGE_OPTIONS.map(age => (
+                                        <button
+                                            key={age}
+                                            className={`age-chip${selectedAge === age ? ' selected' : ''}`}
+                                            onClick={() => handleAgeSelect(age)}
                                         >
-                                            <div className="tile-check">✓</div>
-                                            <div className="enroll-course-tile-content">
-                                                <span className="tile-icon">{course.icon}</span>
-                                                <div className="tile-name">{course.name}</div>
-                                                <div className="tile-meta">{course.meta}</div>
-                                            </div>
-                                        </div>
-                                    );
-                                })}
-                            </div>
-
-                            <div className="enroll-cta-row">
-                                <Button variant="ghost" onClick={handleBack}>
-                                    ← Change Age
-                                </Button>
-                                <Button
-                                    variant="gold"
-                                    size="lg"
-                                    arrow
-                                    onClick={handleEnroll}
-                                    disabled={selectedCourses.length === 0}
-                                    style={{
-                                        opacity: selectedCourses.length > 0 ? 1 : 0.45,
-                                        cursor: selectedCourses.length > 0 ? 'pointer' : 'not-allowed',
-                                        transition: 'opacity 0.3s ease',
-                                    }}
-                                >
-                                    Enroll Now
-                                </Button>
-                            </div>
-
-                            {selectedCourses.length === 0 && (
-                                <p style={{ textAlign: 'center', fontSize: '0.85rem', color: 'var(--text-muted)', marginTop: '0.75rem' }}>
-                                    Select a course above to enable enrollment
+                                            {age}
+                                        </button>
+                                    ))}
+                                </div>
+                                <p style={{ textAlign: 'center', fontSize: '0.88rem', color: 'var(--text-muted)' }}>
+                                    Select an age to continue →
                                 </p>
-                            )}
-                        </div>
+                            </div>
+                        )}
 
+                        {step === 1 && (
+                            <div className="enroll-step animate-fadeIn">
+                                <h3 className="age-selector-title">
+                                    Perfect! Now pick one or more courses for your {selectedAge}-old
+                                </h3>
+                                <p className="age-selector-sub">All courses have been adapted for {selectedAge}</p>
+
+                                <div className="enroll-courses-grid">
+                                    {ENROLL_COURSES.map(course => {
+                                        const isSelected = selectedCourses.includes(course.id);
+                                        return (
+                                            <div
+                                                key={course.id}
+                                                className={`enroll-course-tile${isSelected ? ' selected' : ''}`}
+                                                onClick={() => handleCourseSelect(course.id)}
+                                                role="button"
+                                                tabIndex={0}
+                                                onKeyDown={e => e.key === 'Enter' && handleCourseSelect(course.id)}
+                                                aria-pressed={isSelected}
+                                            >
+                                                <div className="tile-check">✓</div>
+                                                <div className="enroll-course-tile-content">
+                                                    <span className="tile-icon">{course.icon}</span>
+                                                    <div className="tile-name">{course.name}</div>
+                                                    <div className="tile-meta">{course.meta}</div>
+                                                </div>
+                                            </div>
+                                        );
+                                    })}
+                                </div>
+
+                                <div className="enroll-cta-row">
+                                    <Button variant="ghost" onClick={handleBack}>
+                                        ← Change Age
+                                    </Button>
+                                    <Button
+                                        variant="gold"
+                                        size="lg"
+                                        arrow
+                                        onClick={handleEnroll}
+                                        disabled={selectedCourses.length === 0}
+                                        style={{
+                                            opacity: selectedCourses.length > 0 ? 1 : 0.45,
+                                            cursor: selectedCourses.length > 0 ? 'pointer' : 'not-allowed',
+                                            transition: 'opacity 0.3s ease',
+                                        }}
+                                    >
+                                        Enroll Now
+                                    </Button>
+                                </div>
+
+                                {selectedCourses.length === 0 && (
+                                    <p style={{ textAlign: 'center', fontSize: '0.85rem', color: 'var(--text-muted)', marginTop: '0.75rem' }}>
+                                        Select a course above to enable enrollment
+                                    </p>
+                                )}
+                            </div>
+                        )}
                     </div>
                 </div>
             </div>
@@ -617,15 +609,15 @@ const Home = () => {
                                 unfold their creative vision with confidence, playfulness, and wisdom.
                             </p>
                             <div className="proud-parents-strip" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.35rem' }}>
-                                <Award size={16} style={{ color: 'var(--gold)' }} /> Join <strong style={{ margin: '0 4px' }}>5,000+</strong> Proud Parents Worldwide
+                                <Award size={16} style={{ color: 'var(--gold)' }} /> Join <strong style={{ margin: '0 4px' }}>500+</strong> Proud Parents Worldwide
                             </div>
 
                             {/* Mini stats */}
                             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', marginTop: '1.5rem' }}>
                                 {[
-                                    { val: '50+', lbl: 'Countries' },
+                                    { val: '5+', lbl: 'Countries' },
                                     { val: '4.9★', lbl: 'Rating' },
-                                    { val: '4', lbl: 'Courses' },
+                                    { val: '3', lbl: 'Courses' },
                                     { val: '5–14', lbl: 'Age Group' },
                                 ].map((s, i) => (
                                     <div key={i} style={{ textAlign: 'center', background: 'rgba(255,255,255,0.07)', borderRadius: 12, padding: '0.85rem' }}>
@@ -640,38 +632,7 @@ const Home = () => {
             </section>
 
 
-            {/* ── Testimonials ── */}
-            <section className="testimonials-section">
-                <div className="container">
-                    <div className="text-center animate-fadeInUp">
-                        <span className="section-label" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.35rem' }}>
-                            <Heart size={14} /> Parent Stories
-                        </span>
-                        <h2 className="section-title" style={{ fontSize: '3rem', marginBottom: '0.5rem' }}>
-                            What Proud Parents <span >Are Saying</span>
-                        </h2>
-                        <p className="section-sub" style={{ margin: '0 auto' }}>
-                            Real words from real families across the globe
-                        </p>
-                    </div>
 
-                    <div className="testimonials-grid">
-                        {TESTIMONIALS.map((t, i) => (
-                            <div key={i} className={`testimonial-card animate-fadeInUp delay-${(i % 3) * 100 + 100}`}>
-                                <div className="testimonial-stars">{'★'.repeat(t.stars)}</div>
-                                <p className="testimonial-quote">{t.quote}</p>
-                                <div className="testimonial-author">
-                                    <div className="testimonial-avatar" style={{ fontSize: '0.85rem', fontWeight: 'bold', color: 'var(--gold)' }}>{t.avatar}</div>
-                                    <div className="testimonial-author-info">
-                                        <strong>{t.name}</strong>
-                                        <span>{t.role}</span>
-                                    </div>
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-            </section>
 
 
             {/* ── Our Philosophy ── */}
@@ -762,7 +723,7 @@ const Home = () => {
                                     'Competitive and transparent pay',
                                     'Flexible hours — you set your schedule',
                                     'Continuous training & mentorship',
-                                    'Global student base across 50+ countries',
+                                    'Global student base',
                                     'Certificate of Teaching Excellence',
                                 ].map((perk, i) => (
                                     <div key={i} className="join-card-perk">

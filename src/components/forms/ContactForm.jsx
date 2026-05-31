@@ -14,13 +14,11 @@ const FormField = ({ label, required, error, children }) => (
 const INQUIRY_TYPES = [
     'Book a Free Demo Class',
     'Course Enquiry — Drawing',
-    'Course Enquiry — Painting',
     'Course Enquiry — Calligraphy',
     'Course Enquiry — Phonics',
     'General Question',
     'Partnership / Collaboration',
     'Career / Teaching',
-    'Volunteer with Us',
 ];
 
 const AGE_OPTIONS = [
@@ -57,7 +55,7 @@ const ContactForm = ({ prefillInquiry = '', compact = false }) => {
     useEffect(() => {
         const queryCourse = searchParams.get('course');
         const queryAge = searchParams.get('age');
-        
+
         let initialInquiry = prefillInquiry || '';
         let initialMessage = '';
         let initialAge = '';
@@ -67,7 +65,6 @@ const ContactForm = ({ prefillInquiry = '', compact = false }) => {
             if (coursesList.length === 1) {
                 const singleCourse = coursesList[0].toLowerCase();
                 if (singleCourse === 'drawing') initialInquiry = 'Course Enquiry — Drawing';
-                else if (singleCourse === 'painting') initialInquiry = 'Course Enquiry — Painting';
                 else if (singleCourse === 'calligraphy') initialInquiry = 'Course Enquiry — Calligraphy';
                 else if (singleCourse === 'phonics') initialInquiry = 'Course Enquiry — Phonics';
             } else {

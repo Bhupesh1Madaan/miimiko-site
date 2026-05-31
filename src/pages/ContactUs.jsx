@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { 
-    Mail, 
-    MapPin, 
-    MessageSquare, 
-    Phone, 
-    Instagram, 
-    Clock, 
-    Sparkles, 
-    HelpCircle 
+import {
+    Mail,
+    MapPin,
+    MessageSquare,
+    Phone,
+    Instagram,
+    Clock,
+    Sparkles,
+    HelpCircle
 } from 'lucide-react';
 import ContactForm from '../components/forms/ContactForm';
 import Button from '../components/layout/Button';
@@ -116,141 +116,162 @@ const ContactUs = () => {
                 <div className="container">
                     <div className="contact-grid">
 
-                        {/* ── Left: Form ── */}
-                        <div id="contact-form-container" className="contact-form-card animate-slideInLeft">
+                        {/* ── Left: Info sidebar ── */}
+                        <aside className="contact-info animate-slideInLeft">
+
+                            {/* Quick contact */}
+                            <div className="contact-info-card">
+                                <h4 style={{ display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
+                                    <MapPin size={18} style={{ color: 'var(--maroon)' }} /> Quick Contact
+                                </h4>
+                                <div className="contact-detail">
+                                    <div className="contact-detail-icon" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                        <Mail size={16} style={{ color: 'var(--gold)' }} />
+                                    </div>
+                                    <div className="contact-detail-body">
+                                        <strong>Email Us</strong>
+                                        <a href="mailto:support@miimiko.com">support@miimiko.com</a>
+                                        <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginTop: '2px' }}>
+                                            Usually replies within 4–6 hours
+                                        </span>
+                                    </div>
+                                </div>
+                                <div className="contact-detail">
+                                    <div className="contact-detail-icon" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                        <MessageSquare size={16} style={{ color: 'var(--gold)' }} />
+                                    </div>
+                                    <div className="contact-detail-body">
+                                        <strong>WhatsApp</strong>
+                                        <a href="https://wa.me/918799757218">+91 87997 57218</a>
+                                        <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginTop: '2px' }}>
+                                            Tap to chat directly
+                                        </span>
+                                    </div>
+                                </div>
+                                <div className="contact-detail">
+                                    <div className="contact-detail-icon" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                        <Phone size={16} style={{ color: 'var(--gold)' }} />
+                                    </div>
+                                    <div className="contact-detail-body">
+                                        <strong>Call Us</strong>
+                                        <a href="tel:+918799757218">+91 87997 57218</a>
+                                    </div>
+                                </div>
+                                <div className="contact-detail">
+                                    <div className="contact-detail-icon" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                        <Instagram size={16} style={{ color: 'var(--gold)' }} />
+                                    </div>
+                                    <div className="contact-detail-body">
+                                        <strong>Instagram</strong>
+                                        <a href="https://instagram.com/miimikoart" target="_blank" rel="noopener noreferrer">
+                                            @miimikoart
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* Office hours */}
+                            <div className="contact-info-card">
+                                <h4 style={{ display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
+                                    <Clock size={18} style={{ color: 'var(--maroon)' }} /> Support Hours
+                                </h4>
+                                {[
+                                    { day: 'Monday – Friday', hrs: '9:00 AM – 7:00 PM IST' },
+                                    { day: 'Saturday', hrs: '10:00 AM – 4:00 PM IST' },
+                                    { day: 'Sunday', hrs: 'Closed (WhatsApp only)' },
+                                ].map((row, i) => (
+                                    <div key={i} className="contact-hours-row">
+                                        <strong>{row.day}</strong>
+                                        <span>{row.hrs}</span>
+                                    </div>
+                                ))}
+                                <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginTop: '1rem', lineHeight: 1.55 }}>
+                                    <Clock size={12} style={{ display: 'inline-block', marginRight: '4px', verticalAlign: 'middle' }} /> We aim to respond to all queries within 24 hours during working days.
+                                </p>
+                            </div>
+
+                            {/* Quick CTA */}
+                            <div className="contact-info-card" style={{ background: 'var(--grad-maroon)', border: '2px solid rgba(255,200,87,0.2)' }}>
+                                <h4 style={{ color: 'var(--gold)', borderColor: 'rgba(255,255,255,0.1)', display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
+                                    <Sparkles size={18} style={{ color: 'var(--gold)' }} /> Skip the Queue
+                                </h4>
+                                <p style={{ fontSize: '0.93rem', color: 'rgba(255,255,255,0.75)', lineHeight: 1.7, marginBottom: '1.25rem' }}>
+                                    Want to talk to someone right now? Click below to open a WhatsApp chat directly with our team.
+                                </p>
+                                <Button
+                                    variant="gold"
+                                    href="https://wa.me/918799757218?text=Hi%20Miimiko%20Minds!%20I%20want%20to%20book%20a%20free%20demo%20class."
+                                    arrow
+                                    style={{ width: '100%', justifyContent: 'center' }}
+                                >
+                                    Chat on WhatsApp
+                                </Button>
+                            </div>
+
+                            {/* Promise Card
+                            <div className="contact-info-card-ocp" style={{ border: '2px dashed var(--maroon-light)', background: 'rgba(122,0,75,0.02)' }}>
+                                <h4 style={{ display: 'flex', alignItems: 'center', gap: '0.35rem', color: 'var(--maroon)' }}>
+                                    <Sparkles size={18} style={{ color: 'var(--gold)' }} /> Our Creative Promise
+                                </h4>
+                                <ul style={{ listStyle: 'none', padding: 0, margin: 0, fontSize: '0.88rem', color: 'var(--text-secondary)', display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+                                    <li style={{ display: 'flex', gap: '0.5rem', alignItems: 'flex-start' }}>
+                                        <span style={{ color: 'var(--maroon)' }}>✦</span>
+                                        <span><strong>No Commitment:</strong> All demo classes are 100% free with no credit card required.</span>
+                                    </li>
+                                    <li style={{ display: 'flex', gap: '0.5rem', alignItems: 'flex-start' }}>
+                                        <span style={{ color: 'var(--maroon)' }}>✦</span>
+                                        <span><strong>Personal Attention:</strong> We respond personally to every query within 24 business hours.</span>
+                                    </li>
+                                    <li style={{ display: 'flex', gap: '0.5rem', alignItems: 'flex-start' }}>
+                                        <span style={{ color: 'var(--maroon)' }}>✦</span>
+                                        <span><strong>Privacy First:</strong> Your contact details are never shared or sold to third parties.</span>
+                                    </li>
+                                </ul>
+                            </div> */}
+
+                        </aside>
+
+                        {/* ── Right: Form ── */}
+                        <div id="contact-form-container" className="contact-form-card animate-slideInRight">
                             <div className="contact-form-header">
                                 <h3>Send Us a Message</h3>
                                 <p>Fill in the details below and we'll be in touch very soon.</p>
                             </div>
                             <ContactForm />
                         </div>
-
-                    {/* ── Right: Info sidebar ── */}
-                    <aside className="contact-info animate-slideInRight">
-
-                        {/* Quick contact */}
-                        <div className="contact-info-card">
-                            <h4 style={{ display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
-                                <MapPin size={18} style={{ color: 'var(--maroon)' }} /> Quick Contact
-                            </h4>
-                            <div className="contact-detail">
-                                <div className="contact-detail-icon" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                                    <Mail size={16} style={{ color: 'var(--gold)' }} />
-                                </div>
-                                <div className="contact-detail-body">
-                                    <strong>Email Us</strong>
-                                    <a href="mailto:support@miimiko.com">support@miimiko.com</a>
-                                    <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginTop: '2px' }}>
-                                        Usually replies within 4–6 hours
-                                    </span>
-                                </div>
-                            </div>
-                            <div className="contact-detail">
-                                <div className="contact-detail-icon" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                                    <MessageSquare size={16} style={{ color: 'var(--gold)' }} />
-                                </div>
-                                <div className="contact-detail-body">
-                                    <strong>WhatsApp</strong>
-                                    <a href="https://wa.me/918799757218">+91 87997 57218</a>
-                                    <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginTop: '2px' }}>
-                                        Tap to chat directly
-                                    </span>
-                                </div>
-                            </div>
-                            <div className="contact-detail">
-                                <div className="contact-detail-icon" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                                    <Phone size={16} style={{ color: 'var(--gold)' }} />
-                                </div>
-                                <div className="contact-detail-body">
-                                    <strong>Call Us</strong>
-                                    <a href="tel:+918799757218">+91 87997 57218</a>
-                                </div>
-                            </div>
-                            <div className="contact-detail">
-                                <div className="contact-detail-icon" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                                    <Instagram size={16} style={{ color: 'var(--gold)' }} />
-                                </div>
-                                <div className="contact-detail-body">
-                                    <strong>Instagram</strong>
-                                    <a href="https://instagram.com/miimikoart" target="_blank" rel="noopener noreferrer">
-                                        @miimikoart
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-
-                        {/* Office hours */}
-                        <div className="contact-info-card">
-                            <h4 style={{ display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
-                                <Clock size={18} style={{ color: 'var(--maroon)' }} /> Support Hours
-                            </h4>
-                            {[
-                                { day: 'Monday – Friday', hrs: '9:00 AM – 7:00 PM IST' },
-                                { day: 'Saturday', hrs: '10:00 AM – 4:00 PM IST' },
-                                { day: 'Sunday', hrs: 'Closed (WhatsApp only)' },
-                            ].map((row, i) => (
-                                <div key={i} className="contact-hours-row">
-                                    <strong>{row.day}</strong>
-                                    <span>{row.hrs}</span>
-                                </div>
-                            ))}
-                            <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginTop: '1rem', lineHeight: 1.55 }}>
-                                <Clock size={12} style={{ display: 'inline-block', marginRight: '4px', verticalAlign: 'middle' }} /> We aim to respond to all queries within 24 hours during working days.
-                            </p>
-                        </div>
-
-                        {/* Quick CTA */}
-                        <div className="contact-info-card" style={{ background: 'var(--grad-maroon)', border: '2px solid rgba(255,200,87,0.2)' }}>
-                            <h4 style={{ color: 'var(--gold)', borderColor: 'rgba(255,255,255,0.1)', display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
-                                <Sparkles size={18} style={{ color: 'var(--gold)' }} /> Skip the Queue
-                            </h4>
-                            <p style={{ fontSize: '0.93rem', color: 'rgba(255,255,255,0.75)', lineHeight: 1.7, marginBottom: '1.25rem' }}>
-                                Want to talk to someone right now? Click below to open a WhatsApp chat directly with our team.
-                            </p>
-                            <Button
-                                variant="gold"
-                                href="https://wa.me/918799757218?text=Hi%20Miimiko%20Minds!%20I%20want%20to%20book%20a%20free%20demo%20class."
-                                arrow
-                                style={{ width: '100%', justifyContent: 'center' }}
-                            >
-                                Chat on WhatsApp
-                            </Button>
-                        </div>
-
-                    </aside>
+                    </div>
                 </div>
-            </div>
-        </section>
+            </section>
 
-        {/* ── FAQ ── */}
-        <section className="faq-section">
-            <div className="container">
-                <div className="text-center animate-fadeInUp">
-                    <span className="section-label" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.35rem' }}>
-                        <HelpCircle size={14} /> FAQ
-                    </span>
-                    <h2 className="section-title" style={{ fontSize: '3rem', marginBottom: '0.5rem' }}>
-                        Frequently Asked <span style={{ color: 'var(--maroon)' }}>Questions</span>
-                    </h2>
-                    <p className="section-sub" style={{ margin: '0 auto' }}>
-                        Everything parents want to know before enrolling their child
-                    </p>
+            {/* ── FAQ ── */}
+            <section className="faq-section">
+                <div className="container">
+                    <div className="text-center animate-fadeInUp">
+                        <span className="section-label" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.35rem' }}>
+                            <HelpCircle size={14} /> FAQ
+                        </span>
+                        <h2 className="section-title" style={{ fontSize: '3rem', marginBottom: '0.5rem' }}>
+                            Frequently Asked <span style={{ color: 'var(--maroon)' }}>Questions</span>
+                        </h2>
+                        <p className="section-sub" style={{ margin: '0 auto' }}>
+                            Everything parents want to know before enrolling their child
+                        </p>
+                    </div>
+                    <div className="faq-grid">
+                        {FAQS.map((faq, i) => (
+                            <FaqItem key={i} faq={faq} />
+                        ))}
+                    </div>
+                    <div className="text-center mt-lg">
+                        <p style={{ color: 'var(--text-muted)', marginBottom: '1.25rem' }}>
+                            Still have questions? We'd love to hear from you.
+                        </p>
+                        <Button variant="primary" to="/contact?scroll=form" arrow>Send Us a Message</Button>
+                    </div>
                 </div>
-                <div className="faq-grid">
-                    {FAQS.map((faq, i) => (
-                        <FaqItem key={i} faq={faq} />
-                    ))}
-                </div>
-                <div className="text-center mt-lg">
-                    <p style={{ color: 'var(--text-muted)', marginBottom: '1.25rem' }}>
-                        Still have questions? We'd love to hear from you.
-                    </p>
-                    <Button variant="primary" to="/contact?scroll=form" arrow>Send Us a Message</Button>
-                </div>
-            </div>
-        </section>
+            </section>
 
-    </main>
+        </main>
     );
 };
 

@@ -4,6 +4,10 @@ import { Pencil, Palette, PenTool, Languages, Sparkles, BarChart2, BookOpen, Hel
 import CourseCard from '../components/courses/CourseCard';
 import Button from '../components/layout/Button';
 
+import drawingImg from '../assets/Drawing.jpeg';
+import calligraphyImg from '../assets/Calligraphy.jpeg';
+import phonicsImg from '../assets/Phonics.jpeg';
+
 // Student Artworks
 import art1 from '../assets/artwork/art1.jpeg';
 import art2 from '../assets/artwork/art2.jpeg';
@@ -17,29 +21,18 @@ const ALL_COURSES = [
         name: 'Drawing',
         icon: <Pencil size={64} />,
         brief: 'Build the foundation of all visual arts. Master lines, proportion, shading, and composition from the ground up.',
-        image: null,
+        image: drawingImg,
         duration: '3 Months',
         totalClasses: 24,
         category: 'Foundation',
         categoryColor: '#ff9a57',
     },
     {
-        id: 'painting',
-        name: 'Painting',
-        icon: <Palette size={64} />,
-        brief: 'Explore watercolours and acrylics while discovering your unique colour voice and expressive painting style.',
-        image: null,
-        duration: '3 Months',
-        totalClasses: 24,
-        category: 'Intermediate',
-        categoryColor: '#3498db',
-    },
-    {
         id: 'calligraphy',
         name: 'Calligraphy',
         icon: <PenTool size={64} />,
         brief: 'The meditative craft of beautiful writing — from foundational letterforms to flowing decorative scripts.',
-        image: null,
+        image: calligraphyImg,
         duration: '2 Months',
         totalClasses: 16,
         category: 'All Levels',
@@ -50,7 +43,7 @@ const ALL_COURSES = [
         name: 'Phonics',
         icon: <Languages size={64} />,
         brief: 'Develop strong reading, pronunciation, and spelling skills through interactive phonics classes.',
-        image: null,
+        image: phonicsImg,
         duration: '3 Months',
         totalClasses: 24,
         category: 'Language',
@@ -59,15 +52,15 @@ const ALL_COURSES = [
 ];
 
 const COMPARE_ROWS = [
-    { feature: 'Duration', drawing: '3 Months', painting: '3 Months', calligraphy: '2 Months', phonics: '3 Months' },
-    { feature: 'Total Classes', drawing: '24 Classes', painting: '24 Classes', calligraphy: '16 Classes', phonics: '24 Classes' },
-    { feature: 'Session Length', drawing: '45 min', painting: '45 min', calligraphy: '40 min', phonics: '40 min' },
-    { feature: 'Age Group', drawing: '5–14 yrs', painting: '5–14 yrs', calligraphy: '7–14 yrs', phonics: '5–9 yrs' },
-    { feature: 'Class Size', drawing: 'Max 6', painting: 'Max 6', calligraphy: 'Max 6', phonics: 'Max 6' },
-    { feature: 'Certificate', drawing: '✓', painting: '✓', calligraphy: '✓', phonics: '✓' },
-    { feature: 'Beginner Friendly', drawing: '✓', painting: '✓', calligraphy: '✓', phonics: '✓' },
-    { feature: 'Materials Cost', drawing: 'Very Low', painting: 'Low–Medium', calligraphy: 'Low', phonics: 'Very Low' },
-    { feature: 'Free Demo Available', drawing: '✓', painting: '✓', calligraphy: '✓', phonics: '✓' },
+    { feature: 'Duration', drawing: '3 Months', calligraphy: '2 Months', phonics: '3 Months' },
+    { feature: 'Total Classes', drawing: '24 Classes', calligraphy: '16 Classes', phonics: '24 Classes' },
+    { feature: 'Session Length', drawing: '45 min', calligraphy: '40 min', phonics: '40 min' },
+    { feature: 'Age Group', drawing: '5–14 yrs', calligraphy: '7–14 yrs', phonics: '5–9 yrs' },
+    { feature: 'Class Size', drawing: 'Max 6', calligraphy: 'Max 6', phonics: 'Max 6' },
+    { feature: 'Certificate', drawing: '✓', calligraphy: '✓', phonics: '✓' },
+    { feature: 'Beginner Friendly', drawing: '✓', calligraphy: '✓', phonics: '✓' },
+    { feature: 'Materials Cost', drawing: 'Very Low', calligraphy: 'Low', phonics: 'Very Low' },
+    { feature: 'Free Demo Available', drawing: '✓', calligraphy: '✓', phonics: '✓' },
 ];
 
 const FAQS = [
@@ -119,7 +112,7 @@ const Courses = () => (
         </section>
 
         {/* ── Course Cards Grid ── */}
-        <section style={{ padding: '7rem 0', background: 'var(--cream)' }}>
+        <section style={{ padding: '4.5rem 0', background: 'var(--cream)' }}>
             <div className="container">
                 <div className="text-center animate-fadeInUp">
                     <span className="section-label" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.35rem' }}>
@@ -163,7 +156,6 @@ const Courses = () => (
                             <tr>
                                 <th style={{ minWidth: 180 }}>Feature</th>
                                 <th>Drawing</th>
-                                <th>Painting</th>
                                 <th>Calligraphy</th>
                                 <th>Phonics</th>
                             </tr>
@@ -178,13 +170,6 @@ const Courses = () => (
                                             : row.drawing === '✗'
                                                 ? <span className="compare-cross">✗</span>
                                                 : row.drawing}
-                                    </td>
-                                    <td>
-                                        {row.painting === '✓'
-                                            ? <span className="compare-check">✓</span>
-                                            : row.painting === '✗'
-                                                ? <span className="compare-cross">✗</span>
-                                                : row.painting}
                                     </td>
                                     <td>
                                         {row.calligraphy === '✓'
@@ -209,7 +194,7 @@ const Courses = () => (
         </section>
 
         {/* ── Student Artwork Showcase ── */}
-        <section className="student-artwork-section" style={{ padding: '7rem 0', background: 'transparent' }}>
+        <section className="student-artwork-section" style={{ padding: '4.5rem 0', background: 'transparent' }}>
             <div className="container">
                 <div className="text-center animate-fadeInUp">
                     <span className="section-label" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.35rem' }}>
@@ -238,7 +223,7 @@ const Courses = () => (
         </section>
 
         {/* ── FAQ ── */}
-        <section style={{ padding: '7rem 0', background: 'transparent' }}>
+        <section style={{ padding: '4.5rem 0', background: 'transparent' }}>
             <div className="container">
                 <div className="text-center animate-fadeInUp">
                     <span className="section-label" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.35rem' }}>
@@ -255,7 +240,7 @@ const Courses = () => (
         </section>
 
         {/* ── Final CTA ── */}
-        <section style={{ padding: '6rem 0', background: 'var(--grad-maroon)', textAlign: 'center', position: 'relative', overflow: 'hidden' }}>
+        <section style={{ padding: '4rem 0', background: 'var(--grad-maroon)', textAlign: 'center', position: 'relative', overflow: 'hidden' }}>
             <div className="creative-blob" style={{ width: 350, height: 350, background: 'rgba(255,200,87,0.07)', top: -80, right: -80 }} />
             <div className="creative-blob" style={{ width: 200, height: 200, background: 'rgba(255,182,193,0.06)', bottom: -60, left: -40, animationDelay: '8s' }} />
             <div className="container animate-fadeInUp">

@@ -12,13 +12,6 @@ const COURSES_DROPDOWN = [
         meta: '3 Months · 24 Classes · Ages 5–14',
     },
     {
-        id: 'painting',
-        icon: <Palette size={18} style={{ color: 'rgb(52,152,219)' }} />,
-        bg: 'rgba(52,152,219,0.1)',
-        name: 'Painting',
-        meta: '3 Months · 24 Classes · Ages 5–14',
-    },
-    {
         id: 'calligraphy',
         icon: <PenTool size={18} style={{ color: 'rgb(155,89,182)' }} />,
         bg: 'rgba(155,89,182,0.1)',

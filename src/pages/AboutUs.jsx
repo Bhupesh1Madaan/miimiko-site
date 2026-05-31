@@ -17,50 +17,12 @@ import {
 import Button from '../components/layout/Button';
 
 const STATS = [
-    { num: '5,000+', label: 'Happy Students' },
-    { num: '50+', label: 'Countries Reached' },
+    { num: '500+', label: 'Happy Students' },
+    { num: '5+', label: 'Countries Reached' },
     { num: '4.9★', label: 'Average Rating' },
     { num: '3', label: 'Signature Courses' },
 ];
 
-const TEAM = [
-    {
-        avatar: 'AK',
-        name: 'Ananya Krishnan',
-        role: 'Founder & Creative Director',
-        bio: 'A graduate of NID Ahmedabad with 12 years of art education experience. Ananya built Miimiko Minds on the belief that every child is a natural artist.',
-    },
-    {
-        avatar: 'RD',
-        name: 'Rahul Desai',
-        role: 'Head of Curriculum',
-        bio: 'Former art teacher at international schools in Singapore and Dubai. Rahul crafts every lesson to balance structure with creative exploration.',
-    },
-    {
-        avatar: 'PM',
-        name: 'Priya Menon',
-        role: 'Head of Student Experience',
-        bio: 'Ensures every family has a seamless, joyful journey from first demo to graduation. Priya manages our global teacher team with warmth and rigour.',
-    },
-    {
-        avatar: 'VN',
-        name: 'Vikram Nair',
-        role: 'Lead — Drawing & Sketching',
-        bio: 'An award-winning illustrator who has worked with Penguin, Scholastic, and The Hindu. Vikram brings professional craft into every student session.',
-    },
-    {
-        avatar: 'DR',
-        name: 'Divya Rao',
-        role: 'Lead — Painting',
-        bio: 'Watercolour and acrylic specialist with exhibitions across Mumbai, Bangalore, and London. Divya teaches children to see colour as a language.',
-    },
-    {
-        avatar: 'KI',
-        name: 'Karthik Iyer',
-        role: 'Lead — Calligraphy',
-        bio: 'Master calligrapher trained in both Eastern and Western scripts. Karthik brings patience and precision to every letterform class.',
-    },
-];
 
 const VALUES = [
     { icon: <Leaf size={32} style={{ color: 'var(--gold-dark)' }} />, num: '01', title: 'Child-Led Curiosity', desc: 'We follow the child\'s spark, not a rigid syllabus. Curiosity is the curriculum.' },
@@ -135,7 +97,7 @@ const AboutUs = () => (
                         </p>
                         <p>
                             So she built exactly that. What started as four students on a video call is now a thriving
-                            academy with 5,000+ students across 50+ countries, a team of certified art educators, and
+                            academy with 500+ students across 5+ countries, a team of certified art educators, and
                             a curriculum recognised by parents for its depth, warmth, and results.
                         </p>
                         <p>
@@ -208,32 +170,7 @@ const AboutUs = () => (
             </div>
         </section>
 
-        {/* ── Team ── */}
-        <section className="about-team">
-            <div className="container">
-                <div className="text-center animate-fadeInUp">
-                    <span className="section-label" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.35rem' }}>
-                        <Users size={14} /> The People
-                    </span>
-                    <h2 className="section-title" style={{ fontSize: '3rem', marginBottom: '0.5rem' }}>
-                        Meet the <span style={{ color: 'var(--maroon)' }}>Team Behind</span> Miimiko Minds
-                    </h2>
-                    <p className="section-sub" style={{ margin: '0 auto' }}>
-                        Artists, educators, and child-development advocates — united by one purpose
-                    </p>
-                </div>
-                <div className="team-grid">
-                    {TEAM.map((member, i) => (
-                        <div key={i} className={`team-card animate-fadeInUp delay-${(i % 3) * 100 + 100}`}>
-                            <div className="team-avatar" style={{ fontSize: '2.2rem', fontWeight: '800', color: 'var(--gold)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>{member.avatar}</div>
-                            <div className="team-name">{member.name}</div>
-                            <div className="team-role">{member.role}</div>
-                            <p className="team-bio">{member.bio}</p>
-                        </div>
-                    ))}
-                </div>
-            </div>
-        </section>
+
 
         {/* ── Values ── */}
         <section className="about-values">
@@ -264,7 +201,7 @@ const AboutUs = () => (
         </section>
 
         {/* ── CTA ── */}
-        <section style={{ padding: '6rem 0', background: 'var(--grad-maroon)', position: 'relative', overflow: 'hidden' }}>
+        <section style={{ padding: '4rem 0', background: 'var(--grad-maroon)', position: 'relative', overflow: 'hidden' }}>
             <div className="creative-blob" style={{ width: 350, height: 350, background: 'rgba(255,200,87,0.07)', top: -80, right: -80 }} />
             <div className="container text-center animate-fadeInUp">
                 <span className="section-label" style={{ background: 'rgba(255,200,87,0.12)', borderColor: 'rgba(255,200,87,0.3)', color: 'var(--gold)', display: 'inline-flex', alignItems: 'center', gap: '0.35rem' }}>

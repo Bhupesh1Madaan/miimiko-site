@@ -529,29 +529,37 @@ ol {
     padding: 0 1.5rem;
     gap: 1rem;
   }
+
   .header-logo-name {
     font-size: 1.2rem;
   }
+
   .header-logo-tagline {
     font-size: 0.65rem;
   }
+
   .header-nav {
     gap: 0.1rem;
   }
+
   .nav-link {
     font-size: 0.9rem;
     padding: 0.55rem 0.6rem;
   }
+
   .nav-link::after {
     bottom: 2px;
   }
+
   .nav-link:hover::after,
   .nav-link.active::after {
     width: calc(100% - 1.2rem);
   }
+
   .header-cta {
     gap: 0.5rem;
   }
+
   .header-cta .btn {
     padding: 0.55rem 1.2rem;
     font-size: 0.85rem;
@@ -563,26 +571,33 @@ ol {
     padding: 0 1rem;
     gap: 0.75rem;
   }
+
   .header-logo-name {
     font-size: 1.15rem;
   }
+
   .header-logo-tagline {
     display: none;
   }
+
   .header-nav {
     gap: 0.05rem;
   }
+
   .nav-link {
     font-size: 0.85rem;
     padding: 0.5rem 0.5rem;
   }
+
   .nav-link:hover::after,
   .nav-link.active::after {
     width: calc(100% - 1rem);
   }
+
   .header-cta {
     gap: 0.4rem;
   }
+
   .header-cta .btn {
     padding: 0.5rem 1rem;
     font-size: 0.8rem;
@@ -3207,15 +3222,15 @@ ol {
    CONTACT US PAGE
    ============================================================ */
 .contact-section {
-  padding: 6rem 0;
+  padding: 2.5rem 0;
   background: var(--cream);
 }
 
 .contact-grid {
   display: grid;
-  grid-template-columns: 1fr 420px;
+  grid-template-columns: 420px 1fr;
   gap: 4rem;
-  align-items: start;
+  align-items: stretch;
   margin-top: 3.5rem;
 }
 
@@ -3224,6 +3239,7 @@ ol {
   background: var(--white);
   border-radius: 28px;
   border: 2px solid var(--border-light);
+  height: fit-content;
   box-shadow: var(--shadow-md);
   overflow: hidden;
 }
@@ -3384,6 +3400,14 @@ ol {
 }
 
 .contact-info-card {
+  background: var(--white);
+  border-radius: var(--radius-lg);
+  border: 2px solid var(--border-light);
+  box-shadow: var(--shadow-sm);
+  padding: 2rem;
+}
+
+.contact-info-card-ocp {
   background: var(--white);
   border-radius: var(--radius-lg);
   border: 2px solid var(--border-light);
@@ -4362,6 +4386,7 @@ ol {
    MOBILE RESPONSIVENESS AND SPACING OVERRIDES
    ============================================================ */
 @media (max-width: 900px) {
+
   /* Prevent main content overlap with fixed header on mobile */
   .page-hero {
     padding: 9.5rem 1.5rem 4rem !important;
@@ -4369,6 +4394,7 @@ ol {
 }
 
 @media (max-width: 768px) {
+
   /* Hide banner arrows to prevent them from overlapping slide text */
   .banner-arrow {
     display: none !important;
@@ -4378,7 +4404,7 @@ ol {
   .header {
     padding: 0.8rem 0 !important;
   }
-  
+
   .header.scrolled {
     padding: 0.5rem 0 !important;
   }
@@ -4411,6 +4437,7 @@ ol {
   gap: 1.5rem;
   margin-top: 2rem;
 }
+
 .artwork-card {
   position: relative;
   border-radius: var(--radius-md);
@@ -4420,19 +4447,23 @@ ol {
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   aspect-ratio: 4 / 3;
 }
+
 .artwork-card img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   transition: transform 0.3s ease;
 }
+
 .artwork-card:hover {
   transform: translateY(-5px);
   box-shadow: var(--shadow-md);
 }
+
 .artwork-card:hover img {
   transform: scale(1.05);
 }
+
 .artwork-overlay {
   position: absolute;
   bottom: 0;
@@ -4447,6 +4478,7 @@ ol {
   opacity: 0;
   transition: opacity 0.2s ease;
 }
+
 .artwork-card:hover .artwork-overlay {
   opacity: 1;
 }
@@ -4455,6 +4487,7 @@ ol {
    MOBILE RESPONSIVENESS AND ALIGNMENT OVERRIDES (viewport <= 768px)
    ============================================================ */
 @media (max-width: 768px) {
+
   /* Fix breaking static br inside titles on mobile */
   .page-hero-title br,
   .miimiko-title br,
@@ -4470,6 +4503,7 @@ ol {
 }
 
 @media (max-width: 500px) {
+
   /* Stack the enrollment wizard CTA buttons */
   .enroll-cta-row {
     flex-direction: column-reverse;
@@ -4478,7 +4512,7 @@ ol {
     width: 100%;
     margin-top: 2rem;
   }
-  
+
   .enroll-cta-row .btn,
   .enroll-cta-row button {
     width: 100% !important;
@@ -4491,7 +4525,7 @@ ol {
     padding: 0.6rem 1.25rem !important;
     font-size: 0.9rem !important;
   }
-  
+
   .age-chips {
     gap: 0.6rem !important;
     margin-bottom: 1.75rem !important;
@@ -4501,4 +4535,4 @@ ol {
   .miimiko-card {
     padding: 2.25rem 1.5rem !important;
   }
-}
+}

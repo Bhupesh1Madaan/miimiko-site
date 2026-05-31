@@ -14,7 +14,9 @@ import {
     Briefcase,
     Milestone,
     HelpCircle,
-    UserCheck
+    UserCheck,
+    Pencil,
+    PenTool
 } from 'lucide-react';
 import TeacherApplicationForm from '../components/forms/TeacherApplicationForm';
 import Button from '../components/layout/Button';
@@ -24,26 +26,26 @@ const WHY_JOIN = [
     { icon: <Calendar size={24} style={{ color: 'var(--maroon)' }} />, title: 'Flexible Schedule', desc: 'You choose when you teach. Morning batches, afternoon, evening — build a schedule that fits your life, not the other way around.' },
     { icon: <DollarSign size={24} style={{ color: 'var(--maroon)' }} />, title: 'Transparent Pay', desc: 'Competitive, clearly structured compensation. No hidden clauses. You know exactly what you earn per class, every time.' },
     { icon: <GraduationCap size={24} style={{ color: 'var(--maroon)' }} />, title: 'Grow with Us', desc: 'Access to pedagogy workshops, peer feedback sessions, and curriculum training. We invest in our teachers continuously.' },
-    { icon: <Sparkles size={24} style={{ color: 'var(--maroon)' }} />, title: 'Global Impact', desc: 'Your lessons reach children in 50+ countries. Few career choices give you this scale of meaningful impact from a single session.' },
+    { icon: <Sparkles size={24} style={{ color: 'var(--maroon)' }} />, title: 'Global Impact', desc: 'Your lessons reach children across multiple countries. Few career choices give you this scale of meaningful impact from a single session.' },
     { icon: <Users size={24} style={{ color: 'var(--maroon)' }} />, title: 'Supportive Community', desc: 'Join a team of passionate educators who share resources, ideas, and support. You\'re never teaching alone.' },
 ];
 
 const POSITIONS = [
     {
         id: 'expert',
-        icon: <Palette size={24} style={{ color: 'var(--maroon)' }} />,
+        icon: <Pencil size={24} style={{ color: 'var(--maroon)' }} />,
         iconClass: 'expert',
-        title: 'Online Art Teacher',
+        title: 'Online Art Teacher (Drawing)',
         tags: [
             { label: 'Remote', cls: 'remote' },
             { label: 'Part-time', cls: 'parttime' },
             { label: 'Flexible', cls: 'flexible' },
         ],
-        summary: 'Teach live online art classes to children aged 5–14 in your specialised medium.',
+        summary: 'Teach live online drawing classes to children aged 5–14 in your specialised medium.',
         requirements: [
             'Formal training or degree in Fine Arts, Applied Arts, or a related field',
             'Minimum 1 year of experience teaching or mentoring children',
-            'Strong command of at least one: Drawing, Painting, or Calligraphy',
+            'Strong command of Drawing, Sketching, and Shading techniques',
             'Comfortable on camera and using Zoom / Google Meet',
             'Reliable internet connection (minimum 10 Mbps)',
             'Fluent in English; Hindi proficiency is a bonus',
@@ -57,29 +59,55 @@ const POSITIONS = [
         ],
     },
     {
-        id: 'volunteer',
-        icon: <Heart size={24} style={{ color: 'var(--maroon)' }} />,
-        iconClass: 'volunteer',
-        title: 'Community Volunteer',
+        id: 'calligraphy',
+        icon: <PenTool size={24} style={{ color: 'var(--maroon)' }} />,
+        iconClass: 'calligraphy',
+        title: 'Calligraphy Teacher',
         tags: [
             { label: 'Remote', cls: 'remote' },
+            { label: 'Part-time', cls: 'parttime' },
             { label: 'Flexible', cls: 'flexible' },
-            { label: 'Unpaid', cls: 'parttime' },
         ],
-        summary: 'Support our mission by mentoring students, helping with community outreach, or assisting with events.',
+        summary: 'Teach the beautiful art of lettering and decorative writing to children aged 7–14 years.',
         requirements: [
-            'A genuine passion for children\'s education and creative development',
-            'Ability to commit a minimum of 4 hours per week',
-            'Strong communication and interpersonal skills',
-            'No art expertise required for coordination roles',
-            'Art knowledge welcomed but not mandatory',
+            'Proven expertise in traditional or modern calligraphy and hand lettering',
+            'Minimum 1 year of experience teaching calligraphy/lettering to children',
+            'Deep understanding of pen angles, letter formations, and ink flow',
+            'Comfortable on camera and using Zoom / Google Meet',
+            'Reliable internet connection (minimum 10 Mbps)',
+            'Fluent in English',
         ],
         responsibilities: [
-            'Assist teachers during live class sessions as a class monitor',
-            'Support community outreach and social media campaigns',
-            'Mentor students outside class hours as an art buddy',
-            'Help organise virtual art exhibitions and student showcases',
-            'Represent Miimiko Minds at online education fairs and events',
+            'Conduct live, interactive 40-minute calligraphy classes for small groups (max 6)',
+            'Provide real-time corrections on posture, pen grip, and brush stroke technique',
+            'Track student progress and share regular parent updates',
+            'Participate in monthly pedagogy meetings and curriculum training',
+        ],
+    },
+    {
+        id: 'painting_trainer',
+        icon: <Palette size={24} style={{ color: 'var(--maroon)' }} />,
+        iconClass: 'painting',
+        title: 'Painting Trainer',
+        tags: [
+            { label: 'Remote', cls: 'remote' },
+            { label: 'Part-time', cls: 'parttime' },
+            { label: 'Flexible', cls: 'flexible' },
+        ],
+        summary: 'Guide students in watercolours, acrylics, and color theory, helping them discover their unique color voice.',
+        requirements: [
+            'Formal training or degree in Fine Arts with a focus on painting',
+            'Minimum 1 year of experience teaching painting/color theory to kids',
+            'Strong command of watercolours, acrylics, color mixing, and brush techniques',
+            'Comfortable on camera and using Zoom / Google Meet',
+            'Reliable internet connection (minimum 10 Mbps)',
+            'Fluent in English',
+        ],
+        responsibilities: [
+            'Conduct live, interactive 45-minute painting classes for small groups (max 6)',
+            'Explain colour mixing, light and shadow, and blending techniques clearly',
+            'Guide kids to explore expressiveness over copying pictures',
+            'Assess student creations and offer constructive, positive feedback',
         ],
     },
 ];
@@ -253,7 +281,7 @@ const Careers = () => (
         </section>
 
         {/* ── Application Form ── */}
-        <section style={{ padding: '7rem 0', background: 'var(--cream)' }} id="apply-form">
+        <section style={{ padding: '4.5rem 0', background: 'var(--cream)' }} id="apply-form">
             <div className="container">
                 <div className="text-center animate-fadeInUp" style={{ marginBottom: '3.5rem' }}>
                     <span className="section-label" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.35rem' }}>
@@ -279,7 +307,7 @@ const Careers = () => (
         </section>
 
         {/* ── Bottom CTA ── */}
-        <section style={{ padding: '5rem 0', background: 'var(--grad-maroon)', textAlign: 'center', position: 'relative', overflow: 'hidden' }}>
+        <section style={{ padding: '3.5rem 0', background: 'var(--grad-maroon)', textAlign: 'center', position: 'relative', overflow: 'hidden' }}>
             <div className="creative-blob" style={{ width: 300, height: 300, background: 'rgba(255,200,87,0.07)', top: -80, right: -60 }} />
             <div className="container animate-fadeInUp">
                 <span className="section-label" style={{ background: 'rgba(255,200,87,0.12)', borderColor: 'rgba(255,200,87,0.3)', color: 'var(--gold)', display: 'inline-flex', alignItems: 'center', gap: '0.35rem' }}>
@@ -291,7 +319,9 @@ const Careers = () => (
                 <p className="section-sub on-dark" style={{ margin: '0 auto 2rem' }}>
                     Write to us at <a href="mailto:careers@miimiko.com" style={{ color: 'var(--gold)', fontWeight: 700 }}>careers@miimiko.com</a> and we'll help you figure it out.
                 </p>
-                <Button variant="gold" to="/contact" arrow size="lg">Contact Us</Button>
+                <div style={{ display: 'flex', gap: '1.25rem', justifyContent: 'center' }}>
+                    <Button variant="gold" to="/contact" arrow size="lg">Contact Us</Button>
+                </div>
             </div>
         </section>
 
