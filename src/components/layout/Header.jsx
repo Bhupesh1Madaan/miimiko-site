@@ -110,7 +110,7 @@ const Header = () => {
 
                 {/* ── Logo ── */}
                 <Link to="/" className="header-logo" aria-label="Miimiko Minds Home">
-                    <div className="header-logo-icon"><img src="/src/assets/logo.png" alt="Miimiko Minds Logo" /></div>
+                    <div className="header-logo-icon"><img src="/src/assets/logo.png" alt="Miimiko Logo" /></div>
                     <div className="header-logo-text">
                         <span className="header-logo-name">Miimiko Minds</span>
                         <span className="header-logo-tagline">Unfold your creative vision</span>
