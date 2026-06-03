@@ -1,22 +1,22 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { 
-    Sparkles, 
-    Pencil, 
-    Palette, 
-    PenTool, 
-    Languages, 
-    Star, 
-    Heart, 
-    BookOpen, 
-    Award, 
-    Users, 
-    Globe, 
-    Clock, 
-    Gift, 
-    Smile, 
-    Brain, 
-    TrendingUp, 
+import {
+    Sparkles,
+    Pencil,
+    Palette,
+    PenTool,
+    Languages,
+    Star,
+    Heart,
+    BookOpen,
+    Award,
+    Users,
+    Globe,
+    Clock,
+    Gift,
+    Smile,
+    Brain,
+    TrendingUp,
     Shield,
     Lightbulb
 } from 'lucide-react';
@@ -26,44 +26,158 @@ import Button from '../components/layout/Button';
 import drawingImg from '../assets/Drawing.jpeg';
 import calligraphyImg from '../assets/Calligraphy.jpeg';
 import phonicsImg from '../assets/Phonics.jpeg';
+import banner1 from '../assets/miimiko-bg.png';
+
+const API_URL = "https://script.google.com/macros/s/AKfycbzoeq_65uqlNtvXz89LwYOpvomuouIdogPfVqNIFsi5AiZzaUZSp-c2kHb-8E-UgCC5/exec";
 
 /* ================================================================
-   BANNER DATA
-   Swap `gradient` with `image: new URL('../assets/banner1.jpg', import.meta.url).href`
-   once you add real images to src/assets/
+   HELPER TO PARSE AND MERGE DYNAMIC SHEET STRUCTURES
    ================================================================ */
-const BANNERS = [
-    {
-        id: 1,
-        tag: 'New Batch Starting',
-        title: 'Unleash Your Child\'s Creative Genius',
-        sub: 'Join live online art classes designed for ages 5–14. Expert teachers, flexible schedules, global community.',
-        cta: 'Book Free Demo',
-        ctaLink: '/contact',
-        gradient: 'linear-gradient(135deg, #7a004b 0%, #b5006e 50%, #4a0028 100%)',
-        image: null,   // replace with: new URL('../assets/banner1.jpg', import.meta.url).href
-    },
-    {
-        id: 2,
-        tag: 'Drawing • Calligraphy • Phonics',
-        title: 'Three Courses, Infinite Possibilities',
-        sub: 'From pencil lines to brushstrokes — discover the course that sets your child\'s creativity on fire.',
-        cta: 'Explore Courses',
-        ctaLink: '/courses',
-        gradient: 'linear-gradient(135deg, #4a0028 0%, #7a004b 40%, #ff9a57 100%)',
-        image: null,
-    },
-    {
-        id: 3,
-        tag: 'Proud Parents Worldwide',
-        title: 'Trusted by 500+ Families Across 5+ Countries',
-        sub: 'Real results. Real growth. Real confidence. Join us today and start your child\'s journey.',
-        cta: 'Book Free Demo',
-        ctaLink: '/contact',
-        gradient: 'linear-gradient(135deg, #2a0016 0%, #7a004b 60%, #ffc857 100%)',
-        image: null,
-    },
-];
+const parseGoogleSheetsData = (data) => {
+    let rawCourses = [];
+    let rawDetails = [];
+
+    if (Array.isArray(data)) {
+        rawCourses = data;
+    } else if (data && typeof data === 'object') {
+        const keys = Object.keys(data);
+        const coursesKey = keys.find(k => k.toLowerCase().includes('course') && !k.toLowerCase().includes('detail'));
+        const detailsKey = keys.find(k => k.toLowerCase().includes('detail') || k.toLowerCase().includes('curriculum') || k.toLowerCase().includes('learn') || k.toLowerCase().includes('sheet2'));
+
+        rawCourses = data[coursesKey || keys[0]] || [];
+        rawDetails = data[detailsKey || keys[1]] || [];
+    }
+
+    // 1. Normalize courses basic details
+    const normalized = rawCourses.map(c => {
+        const norm = {};
+        for (let key of Object.keys(c)) {
+            const lower = key.toLowerCase().replace(/[\s_-]/g, '');
+            if (lower === 'courseid' || lower === 'id') norm.id = c[key];
+            else if (lower === 'coursename' || lower === 'name') norm.name = c[key];
+            else if (lower === 'tagline') norm.tagline = c[key];
+            else if (lower === 'brief') norm.brief = c[key];
+            else if (lower === 'description' || lower === 'desc') norm.description = c[key];
+            else if (lower === 'duration' || lower === 'displayduration') norm.duration = c[key];
+            else if (lower === 'totalsessions' || lower === 'totalclasses') norm.totalSessions = c[key];
+            else if (lower === 'sessionsperlevel') norm.sessionsPerLevel = c[key];
+            else if (lower === 'category') norm.category = c[key];
+            else if (lower === 'minage') norm.minAge = c[key];
+            else if (lower === 'maxage') norm.maxAge = c[key];
+            else if (lower === 'mode') norm.mode = c[key];
+            else if (lower === 'schedule') norm.schedule = c[key];
+            else if (lower === 'frequency') norm.frequency = c[key];
+            else if (lower === 'materials' || lower === 'materialrequired') norm.materials = c[key];
+            else if (lower === 'certificate') norm.certificate = c[key];
+            else if (lower === 'teachers') norm.teachers = c[key];
+            else if (lower === 'language') norm.language = c[key];
+            else if (lower === 'icon') norm.icon = c[key];
+            else if (lower === 'image') norm.image = c[key];
+            else if (lower === 'whatyoulllearn') norm.whatYoullLearn = c[key];
+            else if (lower === 'curriculum') norm.curriculum = c[key];
+            else norm[key] = c[key];
+        }
+
+        if (norm.id) norm.id = String(norm.id).toLowerCase().trim();
+        if (norm.minAge) norm.minAge = parseInt(norm.minAge, 10) || 5;
+        if (norm.maxAge) norm.maxAge = parseInt(norm.maxAge, 10) || 14;
+
+        if (typeof norm.whatYoullLearn === 'string') {
+            norm.whatYoullLearn = norm.whatYoullLearn.split(/[|,\n]/).map(x => x.trim()).filter(Boolean);
+        }
+        return norm;
+    });
+
+    // 2. Merge granular course details if present in a second sheet
+    if (Array.isArray(rawDetails) && rawDetails.length > 0) {
+        normalized.forEach(course => {
+            const courseId = String(course.id || '').toLowerCase().trim();
+
+            const courseRows = rawDetails.filter(r => {
+                const rId = String(r.id || r.courseId || r['course id'] || r['Course ID'] || '').toLowerCase().trim();
+                return rId === courseId;
+            });
+
+            if (courseRows.length > 0) {
+                // Parse What You'll Learn bullet points
+                const learnRows = courseRows.filter(r => {
+                    const t = String(r.type || r.Type || '').toLowerCase();
+                    return t.includes('learn') || t.includes('bullet') || t.includes('what');
+                });
+                if (learnRows.length > 0) {
+                    course.whatYoullLearn = learnRows.map(r => r.content || r.Content || r.value || r.Value || '');
+                }
+
+                // Parse Curriculum
+                const curriculumRows = courseRows.filter(r => {
+                    const t = String(r.type || r.Type || '').toLowerCase();
+                    return t.includes('curriculum') || t.includes('syll') || t.includes('less') || t.includes('level');
+                });
+                if (curriculumRows.length > 0) {
+                    const levelsMap = {};
+                    curriculumRows.forEach(r => {
+                        const lvl = String(r.level || r.Level || 'Level 1').trim();
+                        if (!levelsMap[lvl]) {
+                            levelsMap[lvl] = [];
+                        }
+                        const val = r.content || r.Content || r.value || r.Value;
+                        if (val) {
+                            if (typeof val === 'string' && val.includes('|')) {
+                                val.split('|').map(x => x.trim()).forEach(x => levelsMap[lvl].push(x));
+                            } else {
+                                levelsMap[lvl].push(val);
+                            }
+                        }
+                    });
+
+                    course.curriculum = Object.keys(levelsMap).map(lvl => ({
+                        level: lvl,
+                        sessions: levelsMap[lvl]
+                    }));
+                }
+            }
+        });
+    }
+
+    return normalized;
+};
+
+const mapCourseForHome = (course) => {
+    let icon = null;
+    const cid = String(course.id || course.name || '').toLowerCase();
+    if (cid.includes('drawing')) icon = <Pencil size={40} style={{ color: 'var(--maroon)' }} />;
+    else if (cid.includes('calligraphy')) icon = <PenTool size={40} style={{ color: 'var(--maroon)' }} />;
+    else if (cid.includes('phonics')) icon = <Languages size={40} style={{ color: 'var(--maroon)' }} />;
+    else icon = <Palette size={40} style={{ color: 'var(--maroon)' }} />;
+
+    let img = null;
+    if (course.image && (course.image.startsWith('http') || course.image.startsWith('/'))) {
+        img = course.image;
+    } else {
+        if (cid.includes('drawing')) img = drawingImg;
+        else if (cid.includes('calligraphy')) img = calligraphyImg;
+        else if (cid.includes('phonics')) img = phonicsImg;
+    }
+
+    let catColor = '#ff9a57';
+    if (cid.includes('drawing')) catColor = '#ff9a57';
+    else if (cid.includes('calligraphy')) catColor = '#9b59b6';
+    else if (cid.includes('phonics')) catColor = '#2ecc71';
+
+    return {
+        id: course.id || cid,
+        name: course.name,
+        brief: course.brief || course.tagline || '',
+        image: img,
+        duration: course.displayDuration || course.duration || '3 Months',
+        totalClasses: course.totalSessions || course.totalClasses || 24,
+        category: course.category || 'Art Program',
+        categoryColor: catColor,
+        icon: icon,
+    };
+};
+
+// Banners array removed in favor of parallax hero overview section.
 
 /* ================================================================
    COURSES DATA (home page preview)
@@ -172,10 +286,10 @@ const FOCUS_PILLARS = [
         desc: 'Line control, shading, perspective — the vocabulary every visual artist needs.',
     },
     {
-        icon: <Palette size={24} style={{ color: '#3498db' }} />,
-        bg: 'rgba(52,152,219,0.1)',
-        title: 'Colour & Painting',
-        desc: 'Colour theory, mixing techniques, and expressive brushwork across multiple mediums.',
+        icon: <Languages size={24} style={{ color: '#2ecc71' }} />,
+        bg: 'rgba(46, 204, 113, 0.1)',
+        title: 'Phonics & Reading',
+        desc: 'Letter sounds, blends, digraphs, and fluent pronunciation through interactive storytelling.',
     },
     {
         icon: <PenTool size={24} style={{ color: '#9b59b6' }} />,
@@ -206,80 +320,102 @@ const AGE_OPTIONS = [
 
 
 /* ================================================================
-   BANNER CAROUSEL (extracted component for clarity)
+   HERO PARALLAX SECTION
    ================================================================ */
-const BannerCarousel = () => {
+const HeroSection = () => {
     const navigate = useNavigate();
-    const [active, setActive] = useState(0);
-    const timerRef = useRef(null);
-
-    const goTo = useCallback((idx) => {
-        setActive((idx + BANNERS.length) % BANNERS.length);
-    }, []);
+    const [scrollY, setScrollY] = useState(0);
 
     useEffect(() => {
-        timerRef.current = setInterval(() => goTo(active + 1), 5000);
-        return () => clearInterval(timerRef.current);
-    }, [active, goTo]);
+        const handleScroll = () => {
+            setScrollY(window.scrollY);
+        };
+        window.addEventListener('scroll', handleScroll, { passive: true });
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
 
-    const restart = (idx) => {
-        clearInterval(timerRef.current);
-        goTo(idx);
+    const handleScrollToForm = () => {
+        const target = document.getElementById('enroll-section');
+        if (target) {
+            target.scrollIntoView({ behavior: 'smooth' });
+        } else {
+            navigate('/contact?scroll=form');
+        }
     };
 
+    // Painting / Creative Ornaments configuration
+    const ornaments = [
+        { icon: <Palette size={48} />, top: '12%', left: '72%', speed: 0.25, color: '#fdb849', duration: '6s', delay: '0s' },
+        { icon: <Pencil size={36} />, top: '24%', left: '85%', speed: 0.45, color: '#ff9a57', duration: '8s', delay: '-2s' },
+        { icon: <PenTool size={42} />, top: '65%', left: '68%', speed: 0.15, color: '#ff66c4', duration: '7s', delay: '-1s' },
+        { icon: <Sparkles size={52} />, top: '45%', left: '80%', speed: 0.35, color: '#ffd700', duration: '9s', delay: '-3s' },
+        { icon: <Languages size={40} />, top: '75%', left: '86%', speed: 0.5, color: '#2ecc71', duration: '10s', delay: '-4s' },
+        { icon: <Star size={30} />, top: '8%', left: '58%', speed: 0.3, color: '#ffffff', duration: '5s', delay: '-0.5s' },
+        { icon: <Lightbulb size={32} />, top: '32%', left: '52%', speed: 0.2, color: '#ffe66d', duration: '11s', delay: '-1.5s' },
+    ];
+
     return (
-        <section className="banner-section">
-            <div className="banner-track" style={{ transform: `translateX(-${active * 100}%)` }}>
-                {BANNERS.map((b, i) => (
-                    <div
-                        key={b.id}
-                        className="banner-slide"
-                        onClick={() => navigate(b.ctaLink)}
-                        aria-label={b.title}
-                        role="button"
-                        tabIndex={0}
-                        onKeyDown={e => e.key === 'Enter' && navigate(b.ctaLink)}
+        <section className="hero-parallax-section">
+            {/* Background Parallax Layer */}
+            <div 
+                className="hero-parallax-bg"
+                style={{ transform: `translateY(${scrollY * 0.35}px)` }}
+            />
+
+            {/* Flying Ornaments Layer */}
+            {ornaments.map((orb, index) => (
+                <div
+                    key={index}
+                    className="hero-parallax-ornament"
+                    style={{
+                        top: orb.top,
+                        left: orb.left,
+                        color: orb.color,
+                        transform: `translateY(${scrollY * orb.speed}px)`,
+                    }}
+                >
+                    <div 
+                        className="animate-float-ornament"
+                        style={{
+                            animationDuration: orb.duration,
+                            animationDelay: orb.delay,
+                        }}
                     >
-                        {/* Background */}
-                        {b.image
-                            ? <img src={b.image} alt={b.title} className="banner-slide-img" />
-                            : <div className="banner-slide-gradient" style={{ background: b.gradient }} />
-                        }
-                        <div className="banner-slide-overlay" />
-
-                        {/* Content */}
-                        <div className="banner-slide-content">
-                            <span className="banner-slide-tag">{b.tag}</span>
-                            <h2 className="banner-slide-title">{b.title}</h2>
-                            <p className="banner-slide-sub">{b.sub}</p>
-                            <Button
-                                variant="gold"
-                                to={b.ctaLink}
-                                arrow
-                                size="lg"
-                                onClick={e => e.stopPropagation()}
-                            >
-                                {b.cta}
-                            </Button>
-                        </div>
+                        {orb.icon}
                     </div>
-                ))}
-            </div>
+                </div>
+            ))}
 
-            {/* Prev / Next */}
-            <button className="banner-arrow prev" onClick={e => { e.stopPropagation(); restart(active - 1); }} aria-label="Previous banner">‹</button>
-            <button className="banner-arrow next" onClick={e => { e.stopPropagation(); restart(active + 1); }} aria-label="Next banner">›</button>
-
-            {/* Dots */}
-            <div className="banner-dots">
-                {BANNERS.map((_, i) => (
-                    <button
-                        key={i}
-                        className={`banner-dot${i === active ? ' active' : ''}`}
-                        onClick={e => { e.stopPropagation(); restart(i); }}
-                        aria-label={`Go to slide ${i + 1}`}
-                    />
-                ))}
+            <div className="container">
+                <div className="hero-left-content">
+                    <span className="hero-parallax-badge">
+                        🎨 Welcome to Miimiko Minds
+                    </span>
+                    <h1 className="hero-parallax-title">
+                        Unfold Your Child's <br />
+                        <span>Creative Vision</span>
+                    </h1>
+                    <p className="hero-parallax-desc">
+                        Miimiko Minds is a premier online learning space offering structured, live interactive classes in Drawing, Calligraphy, and Phonics for kids aged 5–14. Led by expert educators, we turn raw curiosity into lasting creative confidence, one artwork at a time.
+                    </p>
+                    <div className="hero-parallax-ctas">
+                        <Button
+                            variant="gold"
+                            onClick={handleScrollToForm}
+                            arrow
+                            size="lg"
+                        >
+                            Book Free Demo
+                        </Button>
+                        <Button
+                            variant="outline-gold"
+                            to="/courses"
+                            size="lg"
+                        >
+                            Explore Courses
+                        </Button>
+                    </div>
+                </div>
             </div>
         </section>
     );
@@ -444,13 +580,32 @@ const EnrollSection = () => {
    HOME PAGE
    ================================================================ */
 const Home = () => {
+    const [courses, setCourses] = useState(HOME_COURSES);
+
+    useEffect(() => {
+        const fetchCourses = async () => {
+            try {
+                const res = await fetch(API_URL);
+                const data = await res.json();
+                const parsedList = parseGoogleSheetsData(data);
+                if (parsedList.length > 0) {
+                    const mapped = parsedList.map(mapCourseForHome);
+                    setCourses(mapped);
+                }
+            } catch (err) {
+                console.error("Error fetching courses from Google Sheets:", err);
+            }
+        };
+        fetchCourses();
+    }, []);
+
     return (
         <main>
 
             {/* ══════════════════════════════════════
-          1. BANNER CAROUSEL
+          1. HERO PARALLAX SECTION
       ══════════════════════════════════════ */}
-            <BannerCarousel />
+            <HeroSection />
 
 
             {/* ══════════════════════════════════════
@@ -463,7 +618,7 @@ const Home = () => {
                             <BookOpen size={14} /> What We Teach
                         </span>
                         <h2 className="section-title" style={{ fontSize: '3rem', marginBottom: '0.5rem' }}>
-                            Our <span >Signature Courses</span>
+                            Our <span>Signature Courses</span>
                         </h2>
                         <p className="section-sub" style={{ margin: '0 auto' }}>
                             Each course is crafted to develop specific creative and cognitive abilities
@@ -471,7 +626,7 @@ const Home = () => {
                     </div>
 
                     <div className="courses-grid animate-fadeInUp delay-200">
-                        {HOME_COURSES.map(course => (
+                        {courses.map(course => (
                             <CourseCard key={course.id} course={course} />
                         ))}
                     </div>
@@ -577,7 +732,7 @@ const Home = () => {
                             <p className="miimiko-desc">
                                 Before you commit to anything, let your child experience the magic firsthand.
                                 A live 1-on-1 session, tailored to their age and interests — no pressure, no obligations.
-                              </p>
+                            </p>
                             <div className="miimiko-perks">
                                 {[
                                     'Live session with a certified art teacher',
@@ -668,7 +823,7 @@ const Home = () => {
                         <div className="philosophy-values animate-slideInRight">
                             {[
                                 { title: 'Child-Led Learning', desc: 'We follow the child\'s curiosity, not a rigid syllabus. Every lesson adapts to what lights that child up.' },
-                                { title: 'Process Over Product', desc: 'We celebrate the journey of creating, not just the final painting. Mistakes are our best teachers.' },
+                                { title: 'Process Over Product', desc: 'We celebrate the journey of creating, not just the final artwork. Mistakes are our best teachers.' },
                                 { title: 'Joy as a Method', desc: 'If a child isn\'t having fun, we\'re doing it wrong. Playfulness and rigour are not opposites.' },
                                 { title: 'Global Perspective', desc: 'Our students encounter art from every culture, building empathy and a worldview that goes beyond borders.' },
                             ].map((v, i) => (

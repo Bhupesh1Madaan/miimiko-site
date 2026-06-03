@@ -12,7 +12,7 @@ const FormField = ({ label, required, error, children }) => (
 
 const SPECIALIZATION_OPTIONS = [
     'Drawing',
-    'Painting',
+    'Phonics',
     'Calligraphy',
     'Sketching & Shading',
     'Digital Art',

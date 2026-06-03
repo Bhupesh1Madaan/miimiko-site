@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, NavLink, useLocation } from 'react-router-dom';
 import { Pencil, Palette, PenTool, Languages } from 'lucide-react';
 import Button from './Button';
+import logoImg from '../../assets/logo.png';
 
 const COURSES_DROPDOWN = [
     {
@@ -111,7 +112,7 @@ const Header = () => {
 
                 {/* ── Logo ── */}
                 <Link to="/" className="header-logo" aria-label="Miimiko Minds Home">
-                    <div className="header-logo-icon"><img src="/src/assets/logo.png" alt="Miimiko Logo" /></div>
+                    <div className="header-logo-icon"><img src={logoImg} alt="Miimiko Logo" /></div>
                     <div className="header-logo-text">
                         <span className="header-logo-name">Miimiko Minds</span>
                         <span className="header-logo-tagline">Unfold your creative vision</span>

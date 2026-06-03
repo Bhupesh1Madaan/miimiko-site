@@ -16,7 +16,8 @@ import {
     HelpCircle,
     UserCheck,
     Pencil,
-    PenTool
+    PenTool,
+    Languages
 } from 'lucide-react';
 import TeacherApplicationForm from '../components/forms/TeacherApplicationForm';
 import Button from '../components/layout/Button';
@@ -85,29 +86,29 @@ const POSITIONS = [
         ],
     },
     {
-        id: 'painting_trainer',
-        icon: <Palette size={24} style={{ color: 'var(--maroon)' }} />,
-        iconClass: 'painting',
-        title: 'Painting Trainer',
+        id: 'phonics_trainer',
+        icon: <Languages size={24} style={{ color: 'var(--maroon)' }} />,
+        iconClass: 'phonics',
+        title: 'Phonics Trainer / Educator',
         tags: [
             { label: 'Remote', cls: 'remote' },
             { label: 'Part-time', cls: 'parttime' },
             { label: 'Flexible', cls: 'flexible' },
         ],
-        summary: 'Guide students in watercolours, acrylics, and color theory, helping them discover their unique color voice.',
+        summary: 'Help children aged 5–9 build strong reading, pronunciation, and spelling foundations through interactive lessons.',
         requirements: [
-            'Formal training or degree in Fine Arts with a focus on painting',
-            'Minimum 1 year of experience teaching painting/color theory to kids',
-            'Strong command of watercolours, acrylics, color mixing, and brush techniques',
+            'Certified Phonics Expert (Jolly Phonics, Orton-Gillingham, or similar systems)',
+            'Minimum 1 year of experience teaching phonics/early reading to young kids',
+            'Strong command of phonetic blends, digraphs, vowel sounds, and pronunciation rules',
             'Comfortable on camera and using Zoom / Google Meet',
             'Reliable internet connection (minimum 10 Mbps)',
-            'Fluent in English',
+            'Fluent in English with exceptional pronunciation and accent clarity',
         ],
         responsibilities: [
-            'Conduct live, interactive 45-minute painting classes for small groups (max 6)',
-            'Explain colour mixing, light and shadow, and blending techniques clearly',
-            'Guide kids to explore expressiveness over copying pictures',
-            'Assess student creations and offer constructive, positive feedback',
+            'Conduct live, interactive 40-minute phonics classes for small groups (max 6)',
+            'Use interactive storytelling, sound games, and tongue twisters to build engagement',
+            'Track child progress and share regular vocabulary & spelling updates with parents',
+            'Participate in monthly pedagogy meetings and phonics curriculum enhancements',
         ],
     },
 ];

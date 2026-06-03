@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Facebook, Instagram, Youtube, Twitter, Mail, Phone } from 'lucide-react';
 import Button from './Button';
+import logoImg from '../../assets/logo.png';
 
 const QUICK_LINKS = [
     { label: 'Home', to: '/' },
@@ -46,7 +47,7 @@ const Footer = () => {
                 {/* Brand column */}
                 <div>
                     <div className="footer-brand-logo">
-                        <div className="footer-brand-icon"><img src="/src/assets/logo.png" alt="Miimiko Logo" /></div>
+                        <div className="footer-brand-icon"><img src={logoImg} alt="Miimiko Logo" /></div>
                         <span className="footer-brand-name">Miimiko Minds</span>
                     </div>
                     <p className="footer-brand-desc">

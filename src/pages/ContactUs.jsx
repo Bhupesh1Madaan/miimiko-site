@@ -20,7 +20,7 @@ const FAQS = [
     },
     {
         q: 'Which courses do you currently offer?',
-        a: 'We currently offer Drawing, Painting, and Calligraphy for children aged 5–14. Each course is divided into age-appropriate batches: 5–7 years, 8–11 years, and 12–14 years.',
+        a: 'We currently offer Drawing, Calligraphy, and Phonics for children aged 5–14. Each course is divided into age-appropriate batches: 5–7 years, 8–11 years, and 12–14 years.',
     },
     {
         q: 'How are the classes conducted — what platform do you use?',
@@ -28,7 +28,7 @@ const FAQS = [
     },
     {
         q: 'What materials does my child need?',
-        a: 'A materials list is shared after you enroll. For Drawing, only paper and pencils are needed to start. Painting requires basic watercolour or acrylic sets. Calligraphy requires a calligraphy pen and ink — all affordable and easily available online.',
+        a: 'A materials list is shared after you enroll. For Drawing, only paper and pencils are needed to start. Phonics classes only require a basic notebook and pencils. Calligraphy requires a calligraphy pen and ink — all affordable and easily available online.',
     },
     {
         q: 'Are the classes one-on-one or in a group?',

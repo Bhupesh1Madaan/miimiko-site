@@ -1638,172 +1638,150 @@ ol {
 
 
 /* ============================================================
-   HOME PAGE — BANNER CAROUSEL
+   HOME PAGE — HERO PARALLAX SECTION
    ============================================================ */
-.banner-section {
+.hero-parallax-section {
   position: relative;
-  overflow: hidden;
-  width: 100%;
-  max-width: 100%;
-}
-
-.banner-track {
+  height: 90vh;
+  min-height: 600px;
+  max-height: 900px;
   display: flex;
-  transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
-  will-change: transform;
-  width: 100%;
-}
-
-.banner-slide {
-  flex: 0 0 100%;
-  position: relative;
-  cursor: pointer;
+  align-items: center;
   overflow: hidden;
-  min-height: 640px;
-  display: flex;
-  align-items: flex-end;
-  width: 100%;
-  max-width: 100%;
+  color: var(--white);
+  background: linear-gradient(135deg, #182e59 0%, #3c62ae 50%, #24417a 100%);
+  background-size: cover;
+  background-position: center;
 }
 
-.banner-slide-img {
+/* Background overlay pattern */
+.hero-parallax-bg {
   position: absolute;
   inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.8s var(--ease);
+  background-image: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.05) 0%, transparent 60%),
+                    radial-gradient(circle at 80% 80%, rgba(253, 184, 73, 0.08) 0%, transparent 50%);
+  z-index: 1;
+  pointer-events: none;
 }
 
-.banner-slide:hover .banner-slide-img {
-  transform: scale(1.04);
-}
-
-.banner-slide-overlay {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(to top, rgba(74, 0, 40, 0.82) 0%, rgba(74, 0, 40, 0.25) 55%, transparent 100%);
-}
-
-/* Fallback gradient when no image */
-.banner-slide-gradient {
-  position: absolute;
-  inset: 0;
-}
-
-.banner-slide-content {
+/* Left content configuration */
+.hero-left-content {
   position: relative;
   z-index: 2;
-  padding: 4rem 5rem;
-  max-width: 700px;
+  max-width: 650px;
+  text-align: left;
+  animation: fadeInUp 0.8s var(--ease) both;
 }
 
-.banner-slide-tag {
-  display: inline-block;
-  background: var(--gold);
-  color: var(--maroon);
-  font-size: 0.75rem;
-  font-weight: 800;
-  padding: 0.28rem 1rem;
-  border-radius: var(--radius-pill);
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-  margin-bottom: 1rem;
-}
-
-.banner-slide-title {
-  font-family: var(--font-display);
-  font-size: 3.2rem;
-  font-weight: 800;
-  color: var(--white);
-  line-height: 1.1;
-  margin-bottom: 0.85rem;
-  text-shadow: 2px 4px 16px rgba(0, 0, 0, 0.3);
-}
-
-.banner-slide-sub {
-  font-size: 1.1rem;
-  color: rgba(255, 255, 255, 0.85);
-  margin-bottom: 2rem;
-  line-height: 1.65;
-  max-width: 500px;
-}
-
-/* Dots */
-.banner-dots {
-  position: absolute;
-  bottom: 2rem;
-  right: 2.5rem;
-  z-index: 3;
-  display: flex;
+.hero-parallax-badge {
+  display: inline-flex;
+  align-items: center;
   gap: 0.5rem;
-  align-items: center;
+  background: rgba(253, 184, 73, 0.15);
+  border: 1px solid rgba(253, 184, 73, 0.4);
+  color: var(--gold);
+  font-size: 0.88rem;
+  font-weight: 700;
+  padding: 0.5rem 1.25rem;
+  border-radius: var(--radius-pill);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-bottom: 1.75rem;
+  box-shadow: 0 4px 15px rgba(253, 184, 73, 0.15);
 }
 
-.banner-dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.4);
-  border: none;
-  cursor: pointer;
-  padding: 0;
-  transition: background var(--duration-fast), width var(--duration-mid) var(--ease);
-}
-
-.banner-dot.active {
-  background: var(--gold);
-  width: 24px;
-  border-radius: 4px;
-}
-
-/* Arrows */
-.banner-arrow {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  z-index: 3;
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(8px);
-  border: 1.5px solid rgba(255, 255, 255, 0.3);
+.hero-parallax-title {
+  font-family: var(--font-display);
+  font-size: 3.8rem;
+  font-weight: 900;
+  line-height: 1.15;
+  margin-bottom: 1.5rem;
   color: var(--white);
-  font-size: 1.2rem;
-  cursor: pointer;
+  text-shadow: 0 4px 24px rgba(0, 0, 0, 0.2);
+}
+
+.hero-parallax-title span {
+  background: linear-gradient(135deg, var(--gold) 0%, #ffc857 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.hero-parallax-desc {
+  font-size: 1.25rem;
+  line-height: 1.8;
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 2.5rem;
+  font-family: var(--font-philosopher);
+}
+
+.hero-parallax-ctas {
   display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: background var(--duration-fast), border-color var(--duration-fast);
+  justify-content: flex-start;
+  gap: 1.25rem;
+  flex-wrap: wrap;
 }
 
-.banner-arrow:hover {
-  background: rgba(255, 200, 87, 0.3);
-  border-color: var(--gold);
+/* Floating ornaments */
+.hero-parallax-ornament {
+  position: absolute;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0.35;
+  filter: drop-shadow(0 12px 24px rgba(0, 0, 0, 0.25));
+  will-change: transform;
 }
 
-.banner-arrow.prev {
-  left: 1.5rem;
+@keyframes float-ornament {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-24px) rotate(12deg);
+  }
 }
 
-.banner-arrow.next {
-  right: 1.5rem;
+.animate-float-ornament {
+  animation: float-ornament 6s ease-in-out infinite;
+}
+
+/* Responsive styles */
+@media (max-width: 900px) {
+  .hero-parallax-title {
+    font-size: 3.2rem;
+  }
 }
 
 @media (max-width: 768px) {
-  .banner-slide-title {
-    font-size: 2rem;
+  .hero-parallax-section {
+    height: auto;
+    padding: 8rem 0 6rem;
+    min-height: auto;
   }
 
-  .banner-slide-content {
-    padding: 2.5rem 2rem;
+  .hero-left-content {
+    max-width: 100%;
+    text-align: center;
+    padding: 0 1rem;
   }
 
-  .banner-slide {
-    min-height: 480px;
+  .hero-parallax-title {
+    font-size: 2.5rem;
+  }
+
+  .hero-parallax-desc {
+    font-size: 1.1rem;
+    margin-bottom: 2rem;
+  }
+
+  .hero-parallax-ctas {
+    justify-content: center;
+  }
+
+  .hero-parallax-ornament {
+    opacity: 0.15;
   }
 }
+
 
 
 /* ============================================================
