@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, NavLink, useLocation } from 'react-router-dom';
 import { Pencil, Palette, PenTool, Languages } from 'lucide-react';
 import Button from './Button';
-import logoImg from '../../assets/logo.png';
+import logoImg from '../../assets/miimiko_logo.png';
 
 const COURSES_DROPDOWN = [
     {
