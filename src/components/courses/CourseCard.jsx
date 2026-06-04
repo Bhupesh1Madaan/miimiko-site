@@ -1,24 +1,13 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Clock, BookOpen } from 'lucide-react';
+import { Clock, BookOpen, Pencil, PenTool, Languages, Palette } from 'lucide-react';
 import Button from '../layout/Button';
 
-/**
- * CourseCard
- *
- * Props:
- *  course = {
- *    id          : string   – slug used for routing, e.g. 'drawing'
- *    name        : string
- *    brief       : string   – 1-2 line description
- *    image       : string   – image path from src/assets/
- *    duration    : string   – e.g. '3 Months'
- *    totalClasses: number
- *    category    : string   – e.g. 'Beginner Friendly'
- *    categoryColor: string  – hex accent for the category pill
- *    icon        : ReactNode
- *  }
- */
+// Local assets fallbacks (agar Google sheet mein image link galat ho ya khali ho)
+import drawingFallback from '../../assets/Drawing.jpeg';
+import calligraphyFallback from '../../assets/Calligraphy.jpeg';
+import phonicsFallback from '../../assets/Phonics.jpeg';
+
 const CourseCard = ({ course }) => {
     const navigate = useNavigate();
 
@@ -31,19 +20,43 @@ const CourseCard = ({ course }) => {
         totalClasses,
         category,
         categoryColor = '#7a004b',
-        icon = null,
     } = course;
 
+    // 1. Dynamic Route Navigation Links
     const toDetails = () => navigate(`/courses/${id}`);
     const toContact = () => navigate(`/contact?course=${id}&scroll=form`);
+
+    // 2. Dynamic Lucide Icons Selection based on Course ID
+    const getCourseIcon = (courseId) => {
+        const cid = String(courseId || '').toLowerCase();
+        if (cid.includes('drawing')) return <Pencil size={64} />;
+        if (cid.includes('calligraphy')) return <PenTool size={64} />;
+        if (cid.includes('phonics')) return <Languages size={64} />;
+        return <Palette size={64} />; // Default fallback icon
+    };
+
+    // 3. Smart Image Handlers (Online URL vs Local Fallbacks)
+    const getCourseImage = () => {
+        if (image && (image.startsWith('http://') || image.startsWith('https://'))) {
+            return image; // Agar live image url hai toh wahi dikhao
+        }
+        // Agar image khali hai ya local path hai, toh static assets use karo
+        const cid = String(id || '').toLowerCase();
+        if (cid.includes('drawing')) return drawingFallback;
+        if (cid.includes('calligraphy')) return calligraphyFallback;
+        if (cid.includes('phonics')) return phonicsFallback;
+        return null;
+    };
+
+    const displayImage = getCourseImage();
 
     return (
         <div className="course-card">
 
-            {/* ── Image area ── */}
+            {/* ── Image Area ── */}
             <div className="course-card-image-wrap">
 
-                {/* Know More – top-left */}
+                {/* Know More overlay – Top-Left */}
                 <button
                     className="course-card-know-more"
                     onClick={toDetails}
@@ -52,7 +65,7 @@ const CourseCard = ({ course }) => {
                     Know More ›
                 </button>
 
-                {/* Category pill – top-right */}
+                {/* Category Pill – Top-Right */}
                 <span
                     className="course-card-category"
                     style={{
@@ -60,59 +73,60 @@ const CourseCard = ({ course }) => {
                         color: '#fff',
                     }}
                 >
-                    {category}
+                    {category || 'Art Program'}
                 </span>
 
-                {/* Course image */}
-                {image ? (
+                {/* Main Image Rendering */}
+                {displayImage ? (
                     <img
-                        src={image}
+                        src={displayImage}
                         alt={`${name} course`}
                         className="course-card-image"
-                    />
-                ) : (
-                    /* Fallback gradient when no image supplied */
-                    <div
-                        className="course-card-image"
-                        style={{
-                            background: 'linear-gradient(135deg, var(--maroon) 0%, var(--maroon-dark) 100%)',
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            color: 'var(--gold)',
+                        onError={(e) => {
+                            // Agar kabhi link fail ho jaye toh gradient fallback dikhao
+                            e.target.style.display = 'none';
+                            e.target.nextSibling.style.display = 'flex';
                         }}
-                    >
-                        {icon}
-                    </div>
-                )}
+                    />
+                ) : null}
+
+                {/* Gradient Fallback Box with Dynamic Icon (If image fails or not available) */}
+                <div
+                    className="course-card-image"
+                    style={{
+                        background: 'linear-gradient(135deg, var(--maroon) 0%, var(--maroon-dark) 100%)',
+                        display: displayImage ? 'none' : 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        color: 'var(--gold)',
+                    }}
+                >
+                    {getCourseIcon(id)}
+                </div>
             </div>
 
-            {/* ── Body ── */}
+            {/* ── Body Content ── */}
             <div className="course-card-body">
-
-                {/* Name */}
                 <h3 className="course-card-name">{name}</h3>
-
-                {/* Brief */}
                 <p className="course-card-brief">{brief}</p>
 
-                {/* Duration / Classes meta row */}
+                {/* Meta Rows (Duration & Total Classes) */}
                 <div className="course-card-meta">
                     <div className="course-card-meta-item" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                         <span className="course-card-meta-value" style={{ display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
-                            <Clock size={16} style={{ color: 'var(--maroon)' }} /> {duration}
+                            <Clock size={16} style={{ color: 'var(--maroon)' }} /> {duration || '3 Months'}
                         </span>
                         <span className="course-card-meta-label">Duration</span>
                     </div>
                     <div className="course-card-meta-item" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                         <span className="course-card-meta-value" style={{ display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
-                            <BookOpen size={16} style={{ color: 'var(--maroon)' }} /> {totalClasses}
+                            <BookOpen size={16} style={{ color: 'var(--maroon)' }} /> {totalClasses || 24}
                         </span>
                         <span className="course-card-meta-label">Total Classes</span>
                     </div>
                 </div>
 
-                {/* Actions */}
+                {/* Bottom CTA Actions */}
                 <div className="course-card-actions">
                     <Button
                         variant="outline"

@@ -3,6 +3,8 @@ import { useSearchParams } from 'react-router-dom';
 import { ShieldCheck, Sparkles } from 'lucide-react';
 import Button from '../layout/Button';
 
+const RESPONSE_API_URL = "https://script.google.com/macros/s/AKfycbzGV15DsYRkVoLNLXfqH8EaXRWz_HP7RP6XIBqQCvLsXjk8qGNevzDbhg3UGLonjgLi1A/exec";
+
 const FormField = ({ label, required, error, children }) => (
     <div className="form-field">
         <label className="form-label">{label}{required && <span>*</span>}</label>
@@ -108,16 +110,40 @@ const ContactForm = ({ prefillInquiry = '', compact = false }) => {
         if (errors[key]) setErrors(prev => ({ ...prev, [key]: '' }));
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         const errs = validate(fields);
         if (Object.keys(errs).length) { setErrors(errs); return; }
+
         setLoading(true);
-        // Simulated submission — replace with your API call
-        setTimeout(() => {
+
+        try {
+            // FormData Object ke zariye data post karenge
+            const formData = new FormData();
+            formData.append('formType', 'demo');
+            formData.append('parentName', fields.parentName);
+            formData.append('childName', fields.childName);
+            formData.append('email', fields.email);
+            formData.append('phone', fields.phone);
+            formData.append('childAge', fields.childAge);
+            formData.append('country', fields.country);
+            formData.append('inquiryType', fields.inquiryType);
+            formData.append('message', fields.message);
+
+            // POST Mode: no-cors se hit marenge, 100% block proof hai
+            await fetch(RESPONSE_API_URL, {
+                method: 'POST',
+                mode: 'no-cors',
+                body: formData
+            });
+
             setLoading(false);
             setSubmitted(true);
-        }, 1400);
+        } catch (err) {
+            console.error("Submission failed:", err);
+            setLoading(false);
+            alert("Network error, please check your connection.");
+        }
     };
 
     if (submitted) {
@@ -141,83 +167,41 @@ const ContactForm = ({ prefillInquiry = '', compact = false }) => {
     return (
         <form onSubmit={handleSubmit} noValidate>
             <div className="contact-form-body">
-
                 <div className="form-row">
                     <FormField label="Parent / Guardian Name" required error={errors.parentName}>
-                        <input
-                            className={`form-input${errors.parentName ? ' error' : ''}`}
-                            type="text"
-                            placeholder="e.g. Priya Sharma"
-                            value={fields.parentName}
-                            onChange={set('parentName')}
-                            autoComplete="name"
-                        />
+                        <input className={`form-input${errors.parentName ? ' error' : ''}`} type="text" placeholder="e.g. Priya Sharma" value={fields.parentName} onChange={set('parentName')} autoComplete="name" />
                     </FormField>
                     <FormField label="Child's Name" error={errors.childName}>
-                        <input
-                            className="form-input"
-                            type="text"
-                            placeholder="e.g. Aanya"
-                            value={fields.childName}
-                            onChange={set('childName')}
-                        />
+                        <input className="form-input" type="text" placeholder="e.g. Aanya" value={fields.childName} onChange={set('childName')} />
                     </FormField>
                 </div>
 
                 <div className="form-row">
                     <FormField label="Email Address" required error={errors.email}>
-                        <input
-                            className={`form-input${errors.email ? ' error' : ''}`}
-                            type="email"
-                            placeholder="you@example.com"
-                            value={fields.email}
-                            onChange={set('email')}
-                            autoComplete="email"
-                        />
+                        <input className={`form-input${errors.email ? ' error' : ''}`} type="email" placeholder="you@example.com" value={fields.email} onChange={set('email')} autoComplete="email" />
                     </FormField>
                     <FormField label="Phone / WhatsApp" required error={errors.phone}>
-                        <input
-                            className={`form-input${errors.phone ? ' error' : ''}`}
-                            type="tel"
-                            placeholder="+91 98765 43210"
-                            value={fields.phone}
-                            onChange={set('phone')}
-                            autoComplete="tel"
-                        />
+                        <input className={`form-input${errors.phone ? ' error' : ''}`} type="tel" placeholder="+91 98765 43210" value={fields.phone} onChange={set('phone')} autoComplete="tel" />
                     </FormField>
                 </div>
 
                 <div className="form-row">
                     <FormField label="Child's Age" required error={errors.childAge}>
                         <div className="form-select-wrap">
-                            <select
-                                className={`form-select${errors.childAge ? ' error' : ''}`}
-                                value={fields.childAge}
-                                onChange={set('childAge')}
-                            >
+                            <select className={`form-select${errors.childAge ? ' error' : ''}`} value={fields.childAge} onChange={set('childAge')}>
                                 <option value="">Select age…</option>
                                 {AGE_OPTIONS.map(a => <option key={a} value={a}>{a}</option>)}
                             </select>
                         </div>
                     </FormField>
                     <FormField label="Country" error={errors.country}>
-                        <input
-                            className="form-input"
-                            type="text"
-                            placeholder="e.g. India, USA, UK…"
-                            value={fields.country}
-                            onChange={set('country')}
-                        />
+                        <input className="form-input" type="text" placeholder="e.g. India, USA, UK…" value={fields.country} onChange={set('country')} />
                     </FormField>
                 </div>
 
                 <FormField label="What are you looking for?" required error={errors.inquiryType}>
                     <div className="form-select-wrap">
-                        <select
-                            className={`form-select${errors.inquiryType ? ' error' : ''}`}
-                            value={fields.inquiryType}
-                            onChange={set('inquiryType')}
-                        >
+                        <select className={`form-select${errors.inquiryType ? ' error' : ''}`} value={fields.inquiryType} onChange={set('inquiryType')}>
                             <option value="">Select inquiry type…</option>
                             {INQUIRY_TYPES.map(t => <option key={t} value={t}>{t}</option>)}
                         </select>
@@ -225,23 +209,10 @@ const ContactForm = ({ prefillInquiry = '', compact = false }) => {
                 </FormField>
 
                 <FormField label="Your Message" required error={errors.message}>
-                    <textarea
-                        className={`form-textarea${errors.message ? ' error' : ''}`}
-                        placeholder="Tell us a bit about your child and what you're hoping to achieve through art…"
-                        value={fields.message}
-                        onChange={set('message')}
-                        rows={compact ? 4 : 5}
-                    />
+                    <textarea className={`form-textarea${errors.message ? ' error' : ''}`} placeholder="Tell us a bit about your child and what you're hoping to achieve through art…" value={fields.message} onChange={set('message')} rows={compact ? 4 : 5} />
                 </FormField>
 
-                <Button
-                    type="submit"
-                    variant="gold"
-                    size="lg"
-                    arrow
-                    style={{ width: '100%', justifyContent: 'center' }}
-                    disabled={loading}
-                >
+                <Button type="submit" variant="gold" size="lg" arrow style={{ width: '100%', justifyContent: 'center' }} disabled={loading}>
                     {loading ? '✦ Sending…' : 'Send Message'}
                 </Button>
 
@@ -253,4 +224,5 @@ const ContactForm = ({ prefillInquiry = '', compact = false }) => {
     );
 };
 
+// VITE REQUIREMENT: EXPORT DEFAULT STRICTLY AT THE END
 export default ContactForm;

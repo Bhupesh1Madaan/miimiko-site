@@ -28,7 +28,7 @@ import calligraphyImg from '../assets/Calligraphy.jpeg';
 import phonicsImg from '../assets/Phonics.jpeg';
 import banner1 from '../assets/miimiko-bg.png';
 
-const API_URL = "https://script.google.com/macros/s/AKfycbzoeq_65uqlNtvXz89LwYOpvomuouIdogPfVqNIFsi5AiZzaUZSp-c2kHb-8E-UgCC5/exec";
+const API_URL = "https://script.google.com/macros/s/AKfycbzf7Qe2F__VTutTPo_YfQb3JmcEu44-oZhaX6aY6KvMO0SG6tftcR9ZU22-w1ZoOW-K/exec";
 
 /* ================================================================
    HELPER TO PARSE AND MERGE DYNAMIC SHEET STRUCTURES
@@ -357,7 +357,7 @@ const HeroSection = () => {
     return (
         <section className="hero-parallax-section">
             {/* Background Parallax Layer */}
-            <div 
+            <div
                 className="hero-parallax-bg"
                 style={{ transform: `translateY(${scrollY * 0.35}px)` }}
             />
@@ -374,7 +374,7 @@ const HeroSection = () => {
                         transform: `translateY(${scrollY * orb.speed}px)`,
                     }}
                 >
-                    <div 
+                    <div
                         className="animate-float-ornament"
                         style={{
                             animationDuration: orb.duration,
@@ -583,20 +583,38 @@ const Home = () => {
     const [courses, setCourses] = useState(HOME_COURSES);
 
     useEffect(() => {
-        const fetchCourses = async () => {
-            try {
-                const res = await fetch(API_URL);
-                const data = await res.json();
-                const parsedList = parseGoogleSheetsData(data);
-                if (parsedList.length > 0) {
-                    const mapped = parsedList.map(mapCourseForHome);
-                    setCourses(mapped);
-                }
-            } catch (err) {
-                console.error("Error fetching courses from Google Sheets:", err);
+        // 1. Home page ke liye ek unique global callback function name banao
+        const callbackName = 'homeSheetsCallback_' + Math.floor(Math.random() * 100000);
+
+        // 2. Window object par register karo taaki Google ka response direct pakad sakein
+        window[callbackName] = (data) => {
+            if (data && data.courses && data.courses.length > 0) {
+                // Hame poore master data package me se sirf 'courses' tab ka array chahiye
+                const mapped = data.courses.map(mapCourseForHome);
+                setCourses(mapped);
             }
+            cleanup();
         };
-        fetchCourses();
+
+        // 3. Dynamic Script Tag inject karo jo CORS ko bypass karega
+        const script = document.createElement('script');
+        script.src = `${API_URL}${API_URL.includes('?') ? '&' : '?'}callback=${callbackName}`;
+        script.id = callbackName;
+        script.async = true;
+
+        script.onerror = (err) => {
+            console.error("Home page live fetch failed, using local fallbacks:", err);
+            cleanup();
+        };
+
+        const cleanup = () => {
+            const el = document.getElementById(callbackName);
+            if (el) el.remove();
+            delete window[callbackName];
+        };
+
+        document.body.appendChild(script);
+        return () => cleanup();
     }, []);
 
     return (
